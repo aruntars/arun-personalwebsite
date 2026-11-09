@@ -383,7 +383,11 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8p
 </div>
 </div></div></section>
 </main>
-<footer><div class="wrap"><span>Arunkumar Arunagiri &middot; Robotaxi market entry and fleet operations</span><span>San Francisco Bay Area</span></div></footer>
+<footer><div class="wrap"><span>&copy; <span id="year">2026</span> Arunkumar Arunagiri &middot; Robotaxi market entry and fleet operations</span><span>San Francisco Bay Area</span></div></footer>
+<script>
+/* Keeps the footer year current. 2026 stays as the fallback when scripts are off. */
+(function(){var y=document.getElementById('year');if(y)y.textContent=Math.max(2026,new Date().getFullYear());})();
+</script>
 <script>
 /* The lens diagram. One car is followed around the loop: the hub sends a pulse to the next stage, the car
    crosses to it, a ring around the stage fills while the car is being worked on, and the functions that
