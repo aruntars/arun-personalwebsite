@@ -1,6 +1,6 @@
 # arunkumara.com
 
-Personal website of Arunkumar Arunagiri, co-founder of TARS AI. It is a single static page for owners of
+Personal website of Arunkumar Arunagiri, co-founder and co-CEO of TARS AI. It is a single static page for owners of
 human-driven fleets who are working out a robotaxi plan.
 
 Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
