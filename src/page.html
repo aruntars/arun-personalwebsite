@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Arunkumar Arunagiri | Robotaxi market entry and fleet operations</title>
+<meta name="description" content="Arunkumar Arunagiri, co-founder of TARS AI, helps fleet owners assess robotaxi market entry, plan sites and prepare mixed fleet operations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a briefing for fleet owners. The problem in their words up top, beside the subject itself
+   and the usual profile picture. Short sections, each with a mono label in the left margin.
+   Dark-first, in the palette of the TARS videos: one gold, one photo, no gallery. */
+:root{
+  --bg:#0a1118; --bg-2:#0f1922; --bg-3:#16222c; --line:#2a3843; --line-2:#3a4a57;
+  --fg:#e9eef2; --fg-2:#a3b0ba; --fg-3:#95a5b2;
+  --accent:#ffcf00; --accent-text:#ffcf00; --accent-ink:#0a1118; --accent-soft:rgba(255,207,0,.12);
+  --photo-edge:#1f2c37; --shadow:0 18px 50px rgba(0,0,0,.45);
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+    --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+    --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+    --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+  --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+  --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+  --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--body); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--bg)}
+img{max-width:100%; height:auto; display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display); font-weight:700; line-height:1.08; margin:0; text-wrap:balance; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1040px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
+
+/* nav */
+.nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:60px}
+.brand{font-family:var(--display); font-weight:800; font-size:17px; text-decoration:none; letter-spacing:-.01em; display:flex; align-items:center; gap:10px; white-space:nowrap}
+.brand i{width:10px; height:10px; background:var(--accent); border-radius:2px; display:inline-block; transform:rotate(45deg)}
+.nav-links{display:flex; gap:18px; list-style:none; margin:0; padding:0}
+.nav-links a{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--fg-2)}
+.nav-links a:hover{color:var(--fg)}
+.btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:700; font-size:15px; text-decoration:none; padding:10px 16px; border-radius:6px; border:1px solid var(--line-2); color:var(--fg); white-space:nowrap}
+.btn:hover{border-color:var(--fg-3)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.05)}
+@media (max-width:860px){
+  .nav .wrap{height:auto;min-height:60px;flex-wrap:wrap;gap:10px 8px;padding-top:10px;padding-bottom:10px}
+  .brand{font-size:15px;gap:8px;min-width:0}
+  .nav .btn{font-size:13px;padding:7px 10px}
+  .nav-links{order:3;width:100%;gap:0;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .nav-links a{display:block;padding:7px 3px;font-size:10px;letter-spacing:.02em}
+  html{scroll-padding-top:125px}
+}
+
+/* hero: the fleet owner's problem, beside the one face on the site */
+.hero{padding-block:56px 48px}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:48px; align-items:end}
+.hero .copy{min-width:0; display:flex; flex-direction:column; gap:24px}
+.hero h1{font-size:clamp(38px,5.6vw,66px); font-weight:800; letter-spacing:-.025em; line-height:1}
+.hero h1 em{font-style:normal; color:var(--accent-text)}
+.lead{font-size:20px; line-height:1.55; color:var(--fg-2); max-width:58ch}
+.lead strong{color:var(--fg); font-weight:600}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.subject{min-width:0; display:flex; flex-direction:column; gap:16px}
+.subject .face{width:100%; max-width:380px; aspect-ratio:24/25; object-fit:cover; border-radius:6px; border:1px solid var(--photo-edge); box-shadow:var(--shadow)}
+.plate{margin:0; display:grid; grid-template-columns:auto minmax(0,1fr); gap:5px 14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; border-top:1px solid var(--line); padding-top:14px}
+.plate dt{color:var(--fg-3); text-transform:uppercase}
+.plate dd{margin:0; color:var(--fg-2)}
+@media (max-width:860px){ .hero .wrap{grid-template-columns:1fr; gap:36px} }
+
+/* sections: mono label in the margin, content to the right */
+.sec{border-top:1px solid var(--line); padding-block:52px}
+.sec .wrap{display:grid; grid-template-columns:200px minmax(0,1fr); gap:28px 48px}
+.sec .lbl{font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text); padding-top:10px}
+.sec .lbl::before{content:""; display:inline-block; width:8px; height:8px; background:var(--accent); transform:rotate(45deg); margin-right:12px; vertical-align:1px}
+.sec .body{min-width:0; display:flex; flex-direction:column; gap:28px}
+.sec h2{font-size:clamp(28px,3.4vw,38px); letter-spacing:-.02em}
+.sec .intro{font-size:18px; color:var(--fg-2); max-width:62ch}
+.sec .intro strong{color:var(--fg); font-weight:600}
+@media (max-width:860px){ .sec{padding-block:48px} .sec .wrap{grid-template-columns:1fr; gap:18px} .sec .lbl{padding-top:0} }
+
+/* three plain items, no cards */
+.cols3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px}
+.item{min-width:0; border-top:2px solid var(--line-2); padding-top:16px; display:flex; flex-direction:column; gap:10px}
+.item h3{font-size:20px}
+.item p{font-size:16px; color:var(--fg-2)}
+@media (max-width:860px){ .cols3{grid-template-columns:1fr; gap:22px} }
+
+/* the lens */
+.quote{font-family:var(--display); font-weight:800; font-size:clamp(28px,4.4vw,48px); line-height:1.08; letter-spacing:-.025em; max-width:20ch}
+.quote em{font-style:normal; color:var(--accent-text)}
+.beliefs{list-style:none; margin:0; padding:0; display:grid; gap:22px; max-width:66ch}
+.beliefs li{display:grid; grid-template-columns:14px minmax(0,1fr); gap:16px; align-items:start}
+.beliefs li::before{content:""; width:8px; height:8px; margin-top:12px; background:var(--accent); transform:rotate(45deg)}
+.beliefs b{font-family:var(--display); font-weight:700; font-size:19px; display:block; margin-bottom:4px; letter-spacing:-.01em}
+.beliefs p{color:var(--fg-2); font-size:16.5px}
+
+/* the promise and the fit */
+.fill{background:var(--accent-soft); color:var(--fg); border-bottom:2px dashed var(--accent); padding:0 4px; border-radius:2px}
+.fit{display:flex; flex-direction:column; gap:10px; max-width:66ch}
+.fit h3{font-size:17px; font-family:var(--mono); font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-3); font-size:12px}
+.fit ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.fit li{display:grid; grid-template-columns:14px minmax(0,1fr); gap:14px; color:var(--fg-2); font-size:16.5px}
+.fit li::before{content:""; width:8px; height:8px; margin-top:10px; background:var(--accent); transform:rotate(45deg)}
+
+/* the series */
+.sec .intro a{color:var(--fg); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px}
+.episodes{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px}
+.episodes li{min-width:0; display:flex}
+.episodes .ep{display:flex; flex-direction:column; gap:6px; text-decoration:none; color:inherit; min-width:0; width:100%}
+.episodes img{width:100%; height:auto; aspect-ratio:9/16; object-fit:cover; display:block; border-radius:8px; border:1px solid var(--photo-edge); margin-bottom:6px; transition:transform .2s ease}
+.episodes .ep:hover img{transform:translateY(-2px)}
+.episodes .n{font-family:var(--mono); font-size:11.5px; color:var(--fg-3); letter-spacing:.1em; text-transform:uppercase}
+.episodes .t{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.01em; line-height:1.25}
+.episodes .d{font-size:14.5px; color:var(--fg-2)}
+.episodes .w{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); margin-top:auto; padding-top:4px}
+.episodes .ep:hover .w{text-decoration:underline}
+@media (max-width:860px){ .episodes{grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px} }
+
+/* questions, written out in full so search and AI assistants can read them */
+.qa{display:grid; gap:26px; max-width:66ch}
+.qa article{border-top:1px solid var(--line); padding-top:18px; display:flex; flex-direction:column; gap:8px}
+.qa h3{font-size:21px; letter-spacing:-.01em}
+.qa p{color:var(--fg-2); font-size:16.5px}
+
+/* about: short, no dates, one workplace photo */
+.about{max-width:66ch}
+.about .text p.quote{font-size:clamp(26px,3.2vw,36px); color:var(--fg); margin-block:6px}
+.about .text{min-width:0; display:flex; flex-direction:column; gap:18px}
+.about .text p{font-size:17px; color:var(--fg-2)}
+.about .text p:first-child{color:var(--fg); font-size:19px}
+@media (max-width:860px){ .about{grid-template-columns:1fr} .about figure{max-width:360px} }
+
+/* contact */
+.ways{display:grid; gap:10px; max-width:640px}
+.way{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; border:1px solid var(--line); border-radius:8px; text-decoration:none; background:var(--bg-2); min-width:0}
+.way:hover{border-color:var(--line-2)}
+.way .k{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3); margin-bottom:3px}
+.way .v{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.01em; overflow-wrap:anywhere}
+.way .act{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); white-space:nowrap; background:none; border:1px solid var(--line-2); border-radius:6px; padding:8px 12px; cursor:pointer}
+.way .act:hover{border-color:var(--accent)}
+
+footer{border-top:1px solid var(--line); padding-block:28px 40px; color:var(--fg-3); font-family:var(--mono); font-size:12px; letter-spacing:.04em}
+footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px}
+
+.skip{position:fixed;top:8px;left:16px;z-index:20;transform:translateY(-160%);background:var(--accent);color:var(--accent-ink);padding:10px 16px;font-family:var(--display)}
+.skip:focus{transform:translateY(0)}
+.nav nav{display:contents}
+.cred{font-size:16px;color:var(--fg-2);border-left:2px solid var(--accent);padding-left:16px}
+.cred strong{color:var(--fg)}
+.next-step{display:grid;gap:12px}
+.next-step h3{font-size:22px}
+.cta-note{font-size:15px;color:var(--fg-2);max-width:62ch}
+@media(max-width:480px){.hero{padding-block:32px}.hero .copy{gap:20px}.lead{font-size:18px}.hero .wrap{gap:28px}.subject .face{max-width:320px}.way{flex-wrap:wrap}.way .v{font-size:16px}.sec .body{gap:22px}}
+.lens-visual{grid-column:1 / -1;margin:0}
+.lens-visual img{width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
+.lens-visual figcaption{max-width:75ch;margin-top:12px;color:var(--fg-2);font-size:15px}
+.lens-visual figcaption a{text-underline-offset:3px}
+.lens-beliefs{grid-column:2}
+@media(max-width:860px){.lens-beliefs{grid-column:1}}
+.contact-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.contact-tiles .social-tile{flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:160px;padding:20px;gap:24px}
+.contact-tiles .social-tile>div{min-width:0;max-width:100%}
+@media(max-width:600px){.contact-tiles{grid-template-columns:1fr}.contact-tiles .social-tile{flex-direction:row;align-items:center;min-height:110px;flex-wrap:wrap;gap:16px}}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+<header class="nav"><div class="wrap">
+<a class="brand" href="#top"><i aria-hidden="true"></i>Arunkumar Arunagiri</a>
+<nav aria-label="Main navigation"><ul class="nav-links">
+<li><a href="#background">Background</a></li><li><a href="#work">Work with me</a></li><li><a href="#lens">The lens</a></li><li><a href="#series">Series</a></li><li><a href="#contact">Contact</a></li>
+</ul></nav>
+<a class="btn" href="https://www.linkedin.com/in/arunkumararunagiri" target="_blank" rel="noopener">LinkedIn</a>
+</div></header>
+<main id="top" tabindex="-1">
+<section class="hero"><div class="wrap">
+<div class="copy">
+<p class="eyebrow">For owners of human-driven fleets</p>
+<h1>You have the fleet. <em>What’s your robotaxi plan?</em></h1>
+<p class="lead">I help fleet owners assess the robotaxi opportunity: where to enter, which developers to pursue, and what their sites and operations need to become.</p>
+<p class="cred"><strong>I'm Arun, co-founder of TARS AI.</strong> I worked on a purpose-built autonomous vehicle, and I now focus on the operation that has to run around one.</p>
+<div class="cta"><a class="btn primary" href="mailto:contact@tarsai.co">Email contact@tarsai.co</a><a class="btn" href="#work">Explore the work</a></div>
+</div>
+<div class="subject"><img class="face" src="img/profile.jpg" width="960" height="1000" alt="Arunkumar Arunagiri">
+<dl class="plate"><dt>Role</dt><dd>Co-founder, TARS AI</dd><dt>Focus</dt><dd>Robotaxi market entry and fleet operations</dd><dt>Base</dt><dd>San Francisco Bay Area</dd></dl>
+</div></div></section>
+<section class="sec" id="background"><div class="wrap"><p class="lbl">Background</p><div class="body">
+<h2>From 0 to 1. Now focused on 1 to N.</h2>
+<p class="intro">Much of my career has centered on bringing new technology into the world: embedded systems, aircraft software, cloud infrastructure, banking applications and a purpose-built autonomous vehicle. Along the way, I’ve led innovation labs across technology, healthcare and banking, working from early concepts through development and deployment.</p>
+<p class="intro">That is 0 to 1: getting something new to work for the first time. What draws me now is 1 to N: taking technology that works and building the operation that lets it scale. For autonomous fleets, that means bringing sites, charging, maintenance, people and software together as one system.</p>
+</div></div></section>
+<section class="sec" id="work"><div class="wrap"><p class="lbl">Work with me</p><div class="body">
+<h2>Decide where robotaxis fit in your fleet business.</h2>
+<p class="intro">You have vehicles, sites and people. Where do those assets fit in a robotaxi business? Which developers should you pursue? What would your operation need to change?</p>
+<p class="intro">I help fleet owners work through those decisions and develop a plan around their markets, sites and existing business.</p>
+<div class="cols3">
+<div class="item"><h3>Choose where to enter</h3><p>Assess your markets, potential developer partners and the business case, so you can decide where to focus your effort and investment.</p></div>
+<div class="item"><h3>Know what your first site needs</h3><p>Work through layout, charging, staffing, turnaround and operational handoffs to identify what needs to change before deployment.</p></div>
+<div class="item"><h3>Plan the mixed years</h3><p>Set out how human-driven ICE, EV and autonomous vehicles will share sites, infrastructure and people as your fleet changes.</p></div>
+</div>
+<div class="next-step"><h3>Start with the decision in front of you.</h3>
+<p class="intro">Tell me your fleet type, the markets you operate in and the question you need to resolve. In our first conversation, we’ll identify where advisory work could help. We’ll agree the scope and outputs before work begins.</p></div>
+<div class="next-step"><div class="cta"><a class="btn primary" href="mailto:contact@tarsai.co">contact@tarsai.co</a></div>
+<p class="cta-note">Email your fleet type, the markets you operate in and the question you need to resolve.</p></div>
+</div></div></section>
+<section class="sec" id="lens"><div class="wrap"><p class="lbl">The lens</p><div class="body">
+<h2 class="quote">The car is autonomous. <em>The operation around it is not.</em></h2>
+<p class="intro">Someone still has to charge it, clean it, fix it and recover it from the roadside, on a clock set by rider demand. Fleet owners already do most of that work every day. What changes is that there is no driver to move the car, spot a problem or fill a gap, so the operation has to be designed to run without one.</p>
+<ul class="beliefs">
+<li><div><b>Plan for the mixed years.</b><p>Human-driven and autonomous vehicles will share your sites for years. Infrastructure and staffing decisions need to account for that transition.</p></div></li>
+<li><div><b>Design the depot as one system.</b><p>Charging, cleaning and inspection affect the same outcome: when a vehicle is ready to return to service. Plan those steps together.</p></div></li>
+<li><div><b>Choose partners against operating requirements.</b><p>Compare vehicle needs, launch markets, turnaround expectations and economics with what your operation can deliver.</p></div></li>
+</ul>
+</div></div></section>
+<section class="sec" id="tars"><div class="wrap"><p class="lbl">TARS AI</p><div class="body">
+<h2>An operation as autonomous as the vehicles themselves.</h2>
+<p class="intro">I co-founded TARS to build physical AI for fleet operations. We’re developing AI agents to coordinate operational decisions, with robotics for routine physical work.</p>
+</div>
+<figure class="lens-visual">
+<a href="img/lens-operations.png" target="_blank" rel="noopener" aria-label="Open the fleet operations diagram at full size"><img src="img/lens-operations.png" width="1254" height="1254" loading="lazy" alt="TARS AI operating vision: AI agents and robotics at the center of a cycle from dispatch to on the road, back to depot, charging, clean and inspect, maintenance and dispatch again. Supporting functions include cities and states, rider support, remote operations, incidents and collisions, roadside and towing, satellite sites, parking, the power grid, crews, vendors and parts, and service centers."></a>
+<figcaption>An operating vision for coordinating the vehicle lifecycle and the people, infrastructure and services around it. <a href="img/lens-operations.png" target="_blank" rel="noopener">Open full-size diagram</a>.</figcaption>
+</figure>
+<div class="body after-visual">
+<p class="intro">Which car should charge next? What work does it still need? Can it get back to riders before demand peaks? The agents weigh those questions together.</p>
+<p class="intro">We start with a human in the loop. Agents recommend; operators approve or override. We record what was recommended, why, and what the operator decided. That record gives us a foundation for improving the agents and checking their behavior as more decisions become autonomous.</p>
+<p class="intro">The goal: more cars carrying riders when demand peaks, less time lost between rides, and each person able to support more of the fleet. That is the economics behind the ambition: an operation as autonomous as the vehicles themselves.</p>
+<div class="cta"><a class="btn primary" href="https://tarsai.co/#system" target="_blank" rel="noopener">See the TARS operating model</a></div>
+</div></div></section>
+  <section class="sec" id="series">
+    <div class="wrap">
+      <p class="lbl">The series</p>
+      <div class="body">
+        <h2>The 1 to N series</h2>
+        <p class="intro">Short videos on the operational questions behind autonomous fleets: the people, decisions and systems that keep cars ready for service.</p>
+        <ol class="episodes">
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=g5eesldPLqQ" target="_blank" rel="noopener">
+              <img src="img/ep-01.jpg" width="405" height="720" loading="lazy" alt="Episode 1 title card: Why I'm building TARS AI">
+              <span class="n">EP 01</span>
+              <span class="t">Why I'm building TARS AI</span>
+              <span class="d">Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=ic6VA8gJRpY" target="_blank" rel="noopener">
+              <img src="img/ep-02.jpg" width="405" height="720" loading="lazy" alt="Episode 2 title card: The hidden workforce behind robotaxis">
+              <span class="n">EP 02</span>
+              <span class="t">The hidden workforce behind robotaxis</span>
+              <span class="d">Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=1YUuHlvwKU0" target="_blank" rel="noopener">
+              <img src="img/ep-03.jpg" width="405" height="720" loading="lazy" alt="Episode 3 title card: Which car do you charge first?">
+              <span class="n">EP 03</span>
+              <span class="t">Which robotaxi do you charge first?</span>
+              <span class="d">Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=YYi2Dky8X2g" target="_blank" rel="noopener">
+              <img src="img/ep-04.jpg" width="405" height="720" loading="lazy" alt="Episode 4 title card: Would you let AI run the robotaxi depot?">
+              <span class="n">EP 04</span>
+              <span class="t">Would you let AI run the robotaxi depot?</span>
+              <span class="d">What would it take to coordinate depot operations with AI agents?</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+<section class="sec" id="contact"><div class="wrap"><p class="lbl">Contact</p><div class="body">
+<h2>What decision is in front of your fleet?</h2>
+<p class="intro">Email <a href="mailto:contact@tarsai.co">contact@tarsai.co</a> with your fleet type, the markets you operate in and the question you are working through. That gives us a useful place to start.</p>
+<p class="intro">Follow along on LinkedIn, YouTube and TikTok for practical perspectives on robotaxi economics, fleet operations and scaling physical AI.</p>
+<div class="contact-tiles">
+<a class="way social-tile" href="https://www.linkedin.com/in/arunkumararunagiri" target="_blank" rel="noopener"><div><div class="k">LinkedIn</div><div class="v">Arunkumar Arunagiri</div></div><span class="act">View profile</span></a>
+<a class="way social-tile" href="https://www.youtube.com/@arunkumar.arunagiri" target="_blank" rel="noopener"><div><div class="k">YouTube</div><div class="v">The 1 to N series</div></div><span class="act">Watch videos</span></a>
+<a class="way social-tile" href="https://www.tiktok.com/@arunkumar.arunagiri" target="_blank" rel="noopener"><div><div class="k">TikTok</div><div class="v">@arunkumar.arunagiri</div></div><span class="act">View channel</span></a>
+</div>
+</div></div></section>
+</main>
+<footer><div class="wrap"><span>Arunkumar Arunagiri · Robotaxi market entry and fleet operations</span><span>San Francisco Bay Area</span></div></footer>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "Arunkumar Arunagiri",
+      "alternateName": "Arun Arunagiri",
+      "jobTitle": "Co-founder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "TARS AI",
+        "url": "https://tarsai.co"
+      },
+      "description": "Co-founder of TARS AI. Focused on robotaxi market entry and fleet operations.",
+      "knowsAbout": [
+        "Robotaxi fleet operations",
+        "Autonomous vehicle depots",
+        "Fleet partnerships with autonomous vehicle developers",
+        "Mixed fleets of human-driven and autonomous vehicles"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "California",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/arunkumararunagiri",
+        "https://tarsai.co",
+        "https://www.tiktok.com/@arunkumar.arunagiri",
+        "https://www.youtube.com/@arunkumar.arunagiri"
+      ]
+    },
+    {"@type": "VideoObject", "name": "Why I’m building TARS AI: making robotaxis pay at scale", "description": "Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.", "thumbnailUrl": "https://i.ytimg.com/vi/g5eesldPLqQ/maxresdefault.jpg", "uploadDate": "2026-11-08T07:36:51+00:00", "url": "https://www.youtube.com/watch?v=g5eesldPLqQ", "embedUrl": "https://www.youtube.com/embed/g5eesldPLqQ", "position": 1, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "The hidden workforce behind robotaxis", "description": "Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.", "thumbnailUrl": "https://i.ytimg.com/vi/ic6VA8gJRpY/maxresdefault.jpg", "uploadDate": "2026-11-08T16:49:32+00:00", "url": "https://www.youtube.com/watch?v=ic6VA8gJRpY", "embedUrl": "https://www.youtube.com/embed/ic6VA8gJRpY", "position": 2, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "3 chargers down before rush hour: which robotaxi do you charge first?", "description": "Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.", "thumbnailUrl": "https://i.ytimg.com/vi/1YUuHlvwKU0/maxresdefault.jpg", "uploadDate": "2026-11-08T16:55:18+00:00", "url": "https://www.youtube.com/watch?v=1YUuHlvwKU0", "embedUrl": "https://www.youtube.com/embed/1YUuHlvwKU0", "position": 3, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "Would you let AI run the robotaxi depot?", "description": "What would it take to coordinate depot operations with AI agents?", "thumbnailUrl": "https://i.ytimg.com/vi/YYi2Dky8X2g/maxresdefault.jpg", "uploadDate": "2026-11-08T21:08:11+00:00", "url": "https://www.youtube.com/watch?v=YYi2Dky8X2g", "embedUrl": "https://www.youtube.com/embed/YYi2Dky8X2g", "position": 4, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}}
+  ]
+}
+</script>
+</body></html>
