@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Arunkumar Arunagiri | Robotaxi market entry and fleet operations</title>
+<meta name="description" content="Arunkumar Arunagiri, co-founder of TARS AI, helps fleet owners assess robotaxi market entry, plan sites and prepare mixed fleet operations.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a briefing for fleet owners. The problem in their words up top, beside the subject itself
+   and the usual profile picture. Short sections, each with a mono label in the left margin.
+   Dark-first, in the palette of the TARS videos: one gold, one photo, no gallery. */
+:root{
+  --bg:#0a1118; --bg-2:#0f1922; --bg-3:#16222c; --line:#2a3843; --line-2:#3a4a57;
+  --fg:#e9eef2; --fg-2:#a3b0ba; --fg-3:#95a5b2;
+  --accent:#ffcf00; --accent-text:#ffcf00; --accent-ink:#0a1118; --accent-soft:rgba(255,207,0,.12);
+  --photo-edge:#1f2c37; --shadow:0 18px 50px rgba(0,0,0,.45);
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+    --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+    --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+    --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+  --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+  --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+  --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--body); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--bg)}
+img{max-width:100%; height:auto; display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display); font-weight:700; line-height:1.08; margin:0; text-wrap:balance; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1040px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
+
+/* nav */
+.nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:60px}
+.brand{font-family:var(--display); font-weight:800; font-size:17px; text-decoration:none; letter-spacing:-.01em; display:flex; align-items:center; gap:10px; white-space:nowrap}
+.brand i{width:10px; height:10px; background:var(--accent); border-radius:2px; display:inline-block; transform:rotate(45deg)}
+.nav-links{display:flex; gap:18px; list-style:none; margin:0; padding:0}
+.nav-links a{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--fg-2)}
+.nav-links a:hover{color:var(--fg)}
+.btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:700; font-size:15px; text-decoration:none; padding:10px 16px; border-radius:6px; border:1px solid var(--line-2); color:var(--fg); white-space:nowrap}
+.btn:hover{border-color:var(--fg-3)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.05)}
+@media (max-width:860px){
+  .nav .wrap{height:auto;min-height:60px;flex-wrap:wrap;gap:10px 8px;padding-top:10px;padding-bottom:10px}
+  .brand{font-size:15px;gap:8px;min-width:0}
+  .nav .btn{font-size:13px;padding:7px 10px}
+  .nav-links{order:3;width:100%;gap:0;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .nav-links a{display:block;padding:7px 3px;font-size:10px;letter-spacing:.02em}
+  html{scroll-padding-top:125px}
+}
+
+/* hero: the fleet owner's problem, beside the one face on the site */
+.hero{padding-block:56px 48px}
+.hero .wrap{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:48px; align-items:end}
+.hero .copy{min-width:0; display:flex; flex-direction:column; gap:24px}
+.hero h1{font-size:clamp(38px,5.6vw,66px); font-weight:800; letter-spacing:-.025em; line-height:1}
+.hero h1 em{font-style:normal; color:var(--accent-text)}
+.lead{font-size:20px; line-height:1.55; color:var(--fg-2); max-width:58ch}
+.lead strong{color:var(--fg); font-weight:600}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.subject{min-width:0; display:flex; flex-direction:column; gap:16px}
+.subject .face{width:100%; max-width:380px; aspect-ratio:24/25; object-fit:cover; border-radius:6px; border:1px solid var(--photo-edge); box-shadow:var(--shadow)}
+.plate{margin:0; display:grid; grid-template-columns:auto minmax(0,1fr); gap:5px 14px; font-family:var(--mono); font-size:12px; letter-spacing:.04em; border-top:1px solid var(--line); padding-top:14px}
+.plate dt{color:var(--fg-3); text-transform:uppercase}
+.plate dd{margin:0; color:var(--fg-2)}
+@media (max-width:860px){ .hero .wrap{grid-template-columns:1fr; gap:36px} }
+
+/* sections: mono label in the margin, content to the right */
+.sec{border-top:1px solid var(--line); padding-block:52px}
+.sec .wrap{display:grid; grid-template-columns:200px minmax(0,1fr); gap:28px 48px}
+.sec .lbl{font-family:var(--mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text); padding-top:10px}
+.sec .lbl::before{content:""; display:inline-block; width:8px; height:8px; background:var(--accent); transform:rotate(45deg); margin-right:12px; vertical-align:1px}
+.sec .body{min-width:0; display:flex; flex-direction:column; gap:28px}
+.sec h2{font-size:clamp(28px,3.4vw,38px); letter-spacing:-.02em}
+.sec .intro{font-size:18px; color:var(--fg-2); max-width:62ch}
+.sec .intro strong{color:var(--fg); font-weight:600}
+@media (max-width:860px){ .sec{padding-block:48px} .sec .wrap{grid-template-columns:1fr; gap:18px} .sec .lbl{padding-top:0} }
+
+/* three plain items, no cards */
+.cols3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:28px}
+.item{min-width:0; border-top:2px solid var(--line-2); padding-top:16px; display:flex; flex-direction:column; gap:10px}
+.item h3{font-size:20px}
+.item p{font-size:16px; color:var(--fg-2)}
+@media (max-width:860px){ .cols3{grid-template-columns:1fr; gap:22px} }
+
+/* the lens */
+.quote{font-family:var(--display); font-weight:800; font-size:clamp(28px,4.4vw,48px); line-height:1.08; letter-spacing:-.025em; max-width:20ch}
+.quote em{font-style:normal; color:var(--accent-text)}
+.beliefs{list-style:none; margin:0; padding:0; display:grid; gap:22px; max-width:66ch}
+.beliefs li{display:grid; grid-template-columns:14px minmax(0,1fr); gap:16px; align-items:start}
+.beliefs li::before{content:""; width:8px; height:8px; margin-top:12px; background:var(--accent); transform:rotate(45deg)}
+.beliefs b{font-family:var(--display); font-weight:700; font-size:19px; display:block; margin-bottom:4px; letter-spacing:-.01em}
+.beliefs p{color:var(--fg-2); font-size:16.5px}
+
+/* the promise and the fit */
+.fill{background:var(--accent-soft); color:var(--fg); border-bottom:2px dashed var(--accent); padding:0 4px; border-radius:2px}
+.fit{display:flex; flex-direction:column; gap:10px; max-width:66ch}
+.fit h3{font-size:17px; font-family:var(--mono); font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--fg-3); font-size:12px}
+.fit ul{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+.fit li{display:grid; grid-template-columns:14px minmax(0,1fr); gap:14px; color:var(--fg-2); font-size:16.5px}
+.fit li::before{content:""; width:8px; height:8px; margin-top:10px; background:var(--accent); transform:rotate(45deg)}
+
+/* the series */
+.sec .intro a{color:var(--fg); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px}
+.episodes{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:22px}
+.episodes li{min-width:0; display:flex}
+.episodes .ep{display:flex; flex-direction:column; gap:6px; text-decoration:none; color:inherit; min-width:0; width:100%}
+.episodes img{width:100%; height:auto; aspect-ratio:9/16; object-fit:cover; display:block; border-radius:8px; border:1px solid var(--photo-edge); margin-bottom:6px; transition:transform .2s ease}
+.episodes .ep:hover img{transform:translateY(-2px)}
+.episodes .n{font-family:var(--mono); font-size:11.5px; color:var(--fg-3); letter-spacing:.1em; text-transform:uppercase}
+.episodes .t{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.01em; line-height:1.25}
+.episodes .d{font-size:14.5px; color:var(--fg-2)}
+.episodes .w{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); margin-top:auto; padding-top:4px}
+.episodes .ep:hover .w{text-decoration:underline}
+@media (max-width:860px){ .episodes{grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px} }
+
+/* questions, written out in full so search and AI assistants can read them */
+.qa{display:grid; gap:26px; max-width:66ch}
+.qa article{border-top:1px solid var(--line); padding-top:18px; display:flex; flex-direction:column; gap:8px}
+.qa h3{font-size:21px; letter-spacing:-.01em}
+.qa p{color:var(--fg-2); font-size:16.5px}
+
+/* about: short, no dates, one workplace photo */
+.about{max-width:66ch}
+.about .text p.quote{font-size:clamp(26px,3.2vw,36px); color:var(--fg); margin-block:6px}
+.about .text{min-width:0; display:flex; flex-direction:column; gap:18px}
+.about .text p{font-size:17px; color:var(--fg-2)}
+.about .text p:first-child{color:var(--fg); font-size:19px}
+@media (max-width:860px){ .about{grid-template-columns:1fr} .about figure{max-width:360px} }
+
+/* contact */
+.ways{display:grid; gap:10px; max-width:640px}
+.way{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 18px; border:1px solid var(--line); border-radius:8px; text-decoration:none; background:var(--bg-2); min-width:0}
+.way:hover{border-color:var(--line-2)}
+.way .k{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--fg-3); margin-bottom:3px}
+.way .v{font-family:var(--display); font-weight:700; font-size:17px; letter-spacing:-.01em; overflow-wrap:anywhere}
+.way .act{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); white-space:nowrap; background:none; border:1px solid var(--line-2); border-radius:6px; padding:8px 12px; cursor:pointer}
+.way .act:hover{border-color:var(--accent)}
+
+footer{border-top:1px solid var(--line); padding-block:28px 40px; color:var(--fg-3); font-family:var(--mono); font-size:12px; letter-spacing:.04em}
+footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px}
+
+.skip{position:fixed;top:8px;left:16px;z-index:20;transform:translateY(-160%);background:var(--accent);color:var(--accent-ink);padding:10px 16px;font-family:var(--display)}
+.skip:focus{transform:translateY(0)}
+.nav nav{display:contents}
+.cred{font-size:16px;color:var(--fg-2);border-left:2px solid var(--accent);padding-left:16px}
+.cred strong{color:var(--fg)}
+.next-step{display:grid;gap:12px}
+.next-step h3{font-size:22px}
+.cta-note{font-size:15px;color:var(--fg-2);max-width:62ch}
+@media(max-width:480px){.hero{padding-block:32px}.hero .copy{gap:20px}.lead{font-size:18px}.hero .wrap{gap:28px}.subject .face{max-width:320px}.way{flex-wrap:wrap}.way .v{font-size:16px}.sec .body{gap:22px}}
+.lens-visual{grid-column:1 / -1;margin:0}
+.lens-visual img{width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
+.lens-visual figcaption{max-width:75ch;margin-top:12px;color:var(--fg-2);font-size:15px}
+.lens-visual figcaption a{text-underline-offset:3px}
+.lens-beliefs{grid-column:2}
+@media(max-width:860px){.lens-beliefs{grid-column:1}}
+.contact-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.contact-tiles .social-tile{flex-direction:column;align-items:flex-start;justify-content:space-between;min-height:160px;padding:20px;gap:24px}
+.contact-tiles .social-tile>div{min-width:0;max-width:100%}
+@media(max-width:600px){.contact-tiles{grid-template-columns:1fr}.contact-tiles .social-tile{flex-direction:row;align-items:center;min-height:110px;flex-wrap:wrap;gap:16px}}
+
+/* the lens diagram: a live operating loop. Always dark, in the palette of the videos, so the gold reads in both page themes. */
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+.ops{--o-bg:#0a1118;--o-node:#0e1821;--o-line:#2a3843;--o-line-2:#3a4a57;--o-fg:#eef2f5;--o-fg-2:#a3b0ba;--o-gold:#ffcf00;
+  background:radial-gradient(120% 90% at 50% 42%,#13212c 0%,var(--o-bg) 64%);color:var(--o-fg);border:1px solid var(--o-line);border-radius:10px;overflow:hidden;color-scheme:dark}
+.ops-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px 0}
+.ops-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--o-fg-2);display:flex;flex-wrap:wrap;gap:4px 12px}
+.ops-eyebrow b{color:var(--o-gold);font-weight:500}
+.ops-toggle{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--o-fg-2);background:none;border:1px solid var(--o-line);border-radius:6px;padding:7px 10px;cursor:pointer;white-space:nowrap}
+.ops-toggle:hover{color:var(--o-fg);border-color:var(--o-line-2)}
+.ops-stage{padding:4px 10px 0}
+.ops-stage svg{display:block;width:100%;height:auto;margin:0 auto;overflow:visible}
+.ops[data-mode="narrow"] .ops-stage{padding:10px 10px 4px}
+.ops[data-mode="narrow"] .ops-stage svg{max-width:440px}
+.ops-status{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:8px 28px;align-items:start;border-top:1px solid var(--o-line);padding:16px 24px 20px;min-height:86px}
+.ops-status .k{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--o-fg-2);margin-bottom:6px}
+.ops-status .v{display:block;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em;color:var(--o-gold);line-height:1.15}
+.ops-chips{display:flex;flex-wrap:wrap;gap:6px 8px}
+.ops-chips span{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--o-fg);border:1px solid var(--o-line-2);border-radius:999px;padding:4px 11px;white-space:nowrap}
+.ops-hint{white-space:nowrap}
+@media (max-width:700px){
+  .ops-head{padding:16px 16px 0}
+  .ops-status{grid-template-columns:1fr;padding:14px 16px 16px;min-height:168px;align-content:start}
+}
+.ops .trk{fill:none;stroke:var(--o-gold);stroke-opacity:.5;stroke-width:3}
+.ops .chev{fill:none;stroke:var(--o-gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ops .wave{fill:none;stroke:var(--o-gold);stroke-width:1.5;opacity:0;transform-box:fill-box;transform-origin:center;animation:ops-wave 3.6s ease-out infinite}
+.ops .wave.b{animation-delay:1.8s}
+.ops .hub{fill:var(--o-node);stroke:var(--o-gold);stroke-width:3.5}
+.ops .spark{fill:var(--o-gold);transform-box:fill-box;transform-origin:center;animation:ops-twinkle 2.8s ease-in-out infinite}
+.ops .hlab{font-family:var(--display);font-weight:800;fill:var(--o-gold);text-anchor:middle;letter-spacing:.02em}
+.ops .st,.ops .sat{cursor:pointer;transition:opacity .35s}
+.ops .st:focus{outline:none}
+.ops .st:focus-visible .node{stroke:var(--o-fg)}
+.ops .spoke{fill:none;stroke:var(--o-gold);stroke-opacity:.38;stroke-width:2.5;transition:stroke-opacity .35s}
+.ops .st.on .spoke{stroke-opacity:.9}
+.ops .pulse{fill:none;stroke:var(--o-fg);stroke-width:4.5;stroke-linecap:round;stroke-dasharray:26 130;stroke-dashoffset:26;opacity:0}
+.ops .st.on .pulse{animation:ops-pulse .85s ease-out 1}
+.ops .node{fill:var(--o-node);stroke:var(--o-gold);stroke-width:3;transition:fill .35s,stroke-width .35s}
+.ops .st.on .node{fill:#2b2707;stroke-width:4.5}
+.ops .prog{fill:none;stroke:var(--o-fg);stroke-width:3;stroke-linecap:round;stroke-dasharray:100 100}
+.ops .ico{fill:none;stroke:var(--o-fg);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ops .lab{font-family:var(--display);font-weight:700;fill:var(--o-fg);text-anchor:middle;letter-spacing:.02em}
+.ops .sat{opacity:.62}
+.ops .sat.on{opacity:1}
+.ops .link{fill:none;stroke:#7d8a94;stroke-opacity:.75;stroke-width:1.5;transition:stroke .35s,stroke-width .35s}
+.ops .sat.on .link{stroke:var(--o-gold);stroke-opacity:1;stroke-width:2.2}
+.ops .ring{fill:var(--o-node);stroke:var(--o-gold);stroke-width:2;transition:stroke-width .35s,fill .35s}
+.ops .sat.on .ring{stroke-width:3.2;fill:#2b2707}
+.ops .slab{font-family:var(--display);font-weight:700;fill:var(--o-fg);letter-spacing:.09em}
+.ops svg.has-sel .st:not(.on){opacity:.42}
+.ops svg.has-sel .sat:not(.on){opacity:.26}
+.ops .car{fill:var(--o-gold);filter:drop-shadow(0 0 5px rgba(255,207,0,.9))}
+.ops .glow{fill:var(--o-gold);opacity:.2}
+.ops .trail,.ops .ghost{fill:var(--o-gold)}
+.ops.is-paused .wave,.ops.is-paused .spark{animation-play-state:paused}
+@keyframes ops-wave{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.42)}}
+@keyframes ops-twinkle{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.8);opacity:.78}}
+@keyframes ops-pulse{0%{stroke-dashoffset:26;opacity:1}100%{stroke-dashoffset:-104;opacity:1}}
+.ops [hidden]{display:none!important}
+.after-visual{grid-column:2}
+@media(max-width:860px){.after-visual{grid-column:1}}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+<header class="nav"><div class="wrap">
+<a class="brand" href="#top"><i aria-hidden="true"></i>Arunkumar Arunagiri</a>
+<nav aria-label="Main navigation"><ul class="nav-links">
+<li><a href="#background">Background</a></li><li><a href="#work">Work with me</a></li><li><a href="#lens">The lens</a></li><li><a href="#series">Series</a></li><li><a href="#contact">Contact</a></li>
+</ul></nav>
+<a class="btn" href="https://www.linkedin.com/in/arunkumararunagiri" target="_blank" rel="noopener">LinkedIn</a>
+</div></header>
+<main id="top" tabindex="-1">
+<section class="hero"><div class="wrap">
+<div class="copy">
+<p class="eyebrow">For owners of human-driven fleets</p>
+<h1>You have the fleet. <em>What&rsquo;s your robotaxi plan?</em></h1>
+<p class="lead">I help fleet owners assess the robotaxi opportunity: where to enter, which developers to pursue, and what their sites and operations need to become.</p>
+<p class="cred"><strong>I'm Arun, co-founder of TARS AI.</strong> I worked on a purpose-built autonomous vehicle, and I now focus on the operation that has to run around one.</p>
+<div class="cta"><a class="btn primary" href="mailto:contact@tarsai.co">Email contact@tarsai.co</a><a class="btn" href="#work">Explore the work</a></div>
+</div>
+<div class="subject"><img class="face" src="img/profile.jpg" width="960" height="1000" alt="Arunkumar Arunagiri">
+<dl class="plate"><dt>Role</dt><dd>Co-founder, TARS AI</dd><dt>Focus</dt><dd>Robotaxi market entry and fleet operations</dd><dt>Base</dt><dd>San Francisco Bay Area</dd></dl>
+</div></div></section>
+<section class="sec" id="background"><div class="wrap"><p class="lbl">Background</p><div class="body">
+<h2>From 0 to 1. Now focused on 1 to N.</h2>
+<p class="intro">Much of my career has centered on bringing new technology into the world: embedded systems, aircraft software, cloud infrastructure, banking applications and a purpose-built autonomous vehicle. Along the way, I&rsquo;ve led innovation labs across technology, healthcare and banking, working from early concepts through development and deployment.</p>
+<p class="intro">That is 0 to 1: getting something new to work for the first time. What draws me now is 1 to N: taking technology that works and building the operation that lets it scale. For autonomous fleets, that means bringing sites, charging, maintenance, people and software together as one system.</p>
+</div></div></section>
+<section class="sec" id="work"><div class="wrap"><p class="lbl">Work with me</p><div class="body">
+<h2>Decide where robotaxis fit in your fleet business.</h2>
+<p class="intro">You have vehicles, sites and people. Where do those assets fit in a robotaxi business? Which developers should you pursue? What would your operation need to change?</p>
+<p class="intro">I help fleet owners work through those decisions and develop a plan around their markets, sites and existing business.</p>
+<div class="cols3">
+<div class="item"><h3>Choose where to enter</h3><p>Assess your markets, potential developer partners and the business case, so you can decide where to focus your effort and investment.</p></div>
+<div class="item"><h3>Know what your first site needs</h3><p>Work through layout, charging, staffing, turnaround and operational handoffs to identify what needs to change before deployment.</p></div>
+<div class="item"><h3>Plan the mixed years</h3><p>Set out how human-driven ICE, EV and autonomous vehicles will share sites, infrastructure and people as your fleet changes.</p></div>
+</div>
+<div class="next-step"><h3>Start with the decision in front of you.</h3>
+<p class="intro">Tell me your fleet type, the markets you operate in and the question you need to resolve. In our first conversation, we&rsquo;ll identify where advisory work could help. We&rsquo;ll agree the scope and outputs before work begins.</p></div>
+<div class="next-step"><div class="cta"><a class="btn primary" href="mailto:contact@tarsai.co">contact@tarsai.co</a></div>
+<p class="cta-note">Email your fleet type, the markets you operate in and the question you need to resolve.</p></div>
+</div></div></section>
+<section class="sec" id="lens"><div class="wrap"><p class="lbl">The lens</p><div class="body">
+<h2 class="quote">The car is autonomous. <em>The operation around it is not.</em></h2>
+<p class="intro">Someone still has to charge it, clean it, fix it and recover it from the roadside, on a clock set by rider demand. Fleet owners already do most of that work every day. What changes is that there is no driver to move the car, spot a problem or fill a gap, so the operation has to be designed to run without one.</p>
+<ul class="beliefs">
+<li><div><b>Plan for the mixed years.</b><p>Human-driven and autonomous vehicles will share your sites for years. Infrastructure and staffing decisions need to account for that transition.</p></div></li>
+<li><div><b>Design the depot as one system.</b><p>Charging, cleaning and inspection affect the same outcome: when a vehicle is ready to return to service. Plan those steps together.</p></div></li>
+<li><div><b>Choose partners against operating requirements.</b><p>Compare vehicle needs, launch markets, turnaround expectations and economics with what your operation can deliver.</p></div></li>
+</ul>
+</div></div></section>
+<section class="sec" id="tars"><div class="wrap"><p class="lbl">TARS AI</p><div class="body">
+<h2>An operation as autonomous as the vehicles themselves.</h2>
+<p class="intro">I co-founded TARS to build physical AI for fleet operations. We&rsquo;re developing AI agents to coordinate operational decisions, with robotics for routine physical work.</p>
+</div>
+<figure class="lens-visual">
+<div class="ops" id="ops">
+<div class="ops-head" hidden>
+<p class="ops-eyebrow"><b>TARS AI</b><span>Operating vision</span></p>
+<button class="ops-toggle" type="button" aria-label="Pause the animation">Pause</button>
+</div>
+<div class="ops-stage"><noscript><img src="img/lens-operations.png" width="1254" height="1254" loading="lazy" alt="TARS AI operating vision: AI agents and robotics at the center of a cycle from dispatch to on the road, back to depot, charging, clean and inspect, maintenance and dispatch again."></noscript></div>
+<div class="ops-status" hidden>
+<div><span class="k" data-ops="k">Following one car</span><span class="v" data-ops="v">Dispatch</span></div>
+<div><span class="k">Supported by</span><div class="ops-chips" data-ops="chips"></div></div>
+</div>
+<p class="sr-only">TARS AI operating vision: AI agents and robotics at the center of a cycle from dispatch to on the road, back to depot, charging, clean and inspect, maintenance and dispatch again. Supporting functions include cities and states, rider support, remote operations, incidents and collisions, roadside and towing, satellite sites, parking, the power grid, crews, vendors and parts, and service centers.</p>
+</div>
+<figcaption>An operating vision for coordinating the vehicle lifecycle and the people, infrastructure and services around it. <span class="ops-hint">Hover or tap a stage to see what supports it.</span></figcaption>
+</figure>
+<div class="body after-visual">
+<p class="intro">Which car should charge next? What work does it still need? Can it get back to riders before demand peaks? The agents weigh those questions together.</p>
+<p class="intro">We start with a human in the loop. Agents recommend; operators approve or override. We record what was recommended, why, and what the operator decided. That record gives us a foundation for improving the agents and checking their behavior as more decisions become autonomous.</p>
+<p class="intro">The goal: more cars carrying riders when demand peaks, less time lost between rides, and each person able to support more of the fleet. That is the economics behind the ambition: an operation as autonomous as the vehicles themselves.</p>
+<div class="cta"><a class="btn primary" href="https://tarsai.co/#system" target="_blank" rel="noopener">See the TARS operating model</a></div>
+</div></div></section>
+  <section class="sec" id="series">
+    <div class="wrap">
+      <p class="lbl">The series</p>
+      <div class="body">
+        <h2>The 1 to N series</h2>
+        <p class="intro">Short videos on the operational questions behind autonomous fleets: the people, decisions and systems that keep cars ready for service.</p>
+        <ol class="episodes">
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=g5eesldPLqQ" target="_blank" rel="noopener">
+              <img src="img/ep-01.jpg" width="405" height="720" loading="lazy" alt="Episode 1 title card: Why I'm building TARS AI">
+              <span class="n">EP 01</span>
+              <span class="t">Why I'm building TARS AI</span>
+              <span class="d">Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=ic6VA8gJRpY" target="_blank" rel="noopener">
+              <img src="img/ep-02.jpg" width="405" height="720" loading="lazy" alt="Episode 2 title card: The hidden workforce behind robotaxis">
+              <span class="n">EP 02</span>
+              <span class="t">The hidden workforce behind robotaxis</span>
+              <span class="d">Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=1YUuHlvwKU0" target="_blank" rel="noopener">
+              <img src="img/ep-03.jpg" width="405" height="720" loading="lazy" alt="Episode 3 title card: Which car do you charge first?">
+              <span class="n">EP 03</span>
+              <span class="t">Which robotaxi do you charge first?</span>
+              <span class="d">Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+          <li>
+            <a class="ep" href="https://www.youtube.com/watch?v=YYi2Dky8X2g" target="_blank" rel="noopener">
+              <img src="img/ep-04.jpg" width="405" height="720" loading="lazy" alt="Episode 4 title card: Would you let AI run the robotaxi depot?">
+              <span class="n">EP 04</span>
+              <span class="t">Would you let AI run the robotaxi depot?</span>
+              <span class="d">What would it take to coordinate depot operations with AI agents?</span>
+              <span class="w">Watch on YouTube</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+
+<section class="sec" id="contact"><div class="wrap"><p class="lbl">Contact</p><div class="body">
+<h2>What decision is in front of your fleet?</h2>
+<p class="intro">Email <a href="mailto:contact@tarsai.co">contact@tarsai.co</a> with your fleet type, the markets you operate in and the question you are working through. That gives us a useful place to start.</p>
+<p class="intro">Follow along on LinkedIn, YouTube and TikTok for practical perspectives on robotaxi economics, fleet operations and scaling physical AI.</p>
+<div class="contact-tiles">
+<a class="way social-tile" href="https://www.linkedin.com/in/arunkumararunagiri" target="_blank" rel="noopener"><div><div class="k">LinkedIn</div><div class="v">Arunkumar Arunagiri</div></div><span class="act">View profile</span></a>
+<a class="way social-tile" href="https://www.youtube.com/@arunkumar.arunagiri" target="_blank" rel="noopener"><div><div class="k">YouTube</div><div class="v">The 1 to N series</div></div><span class="act">Watch videos</span></a>
+<a class="way social-tile" href="https://www.tiktok.com/@arunkumar.arunagiri" target="_blank" rel="noopener"><div><div class="k">TikTok</div><div class="v">@arunkumar.arunagiri</div></div><span class="act">View channel</span></a>
+</div>
+</div></div></section>
+</main>
+<footer><div class="wrap"><span>Arunkumar Arunagiri &middot; Robotaxi market entry and fleet operations</span><span>San Francisco Bay Area</span></div></footer>
+<script>
+/* The lens diagram. One car is followed around the loop: the hub sends a pulse to the next stage, the car
+   crosses to it, a ring around the stage fills while the car is being worked on, and the functions that
+   support that stage light up. Stages and their supporting functions live in ST below; positions for the
+   wide layout are in a 1040 x 690 box. */
+(function(){
+  var root=document.getElementById('ops');
+  if(!root||!window.requestAnimationFrame||!document.createElementNS) return;
+  var NS='http://www.w3.org/2000/svg';
+  var IC={
+    target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+    car:'<rect x="1.5" y="6" width="21" height="12" rx="4.5"/><rect x="5.5" y="8.6" width="5" height="6.8" rx="1.6"/><rect x="13.5" y="8.6" width="5" height="6.8" rx="1.6"/>',
+    depot:'<path d="M3 10.5 12 3l9 7.5V21H3z"/><path d="M8 21v-7h8v7"/><path d="M8 17.5h8"/>',
+    battery:'<rect x="6" y="5" width="12" height="17" rx="2"/><path d="M10 2.5V5M14 2.5V5"/><path d="M13 9l-3 4.5h4l-3 4.5"/>',
+    search:'<circle cx="11" cy="11" r="7.5"/><path d="M21 21l-4.7-4.7"/>',
+    tool:'<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+    landmark:'<path d="M3 9.5 12 4l9 5.5z"/><path d="M5.5 10v7M10 10v7M14 10v7M18.5 10v7"/><path d="M4.5 17.5h15M3.5 20.5h17"/>',
+    building:'<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M9 7h1.5M13.5 7H15M9 11h1.5M13.5 11H15M9 15h1.5M13.5 15H15"/>',
+    rings:'<circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/>',
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>',
+    zap:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    parking:'<rect x="3.5" y="3.5" width="17" height="17" rx="3.5"/><path d="M9.5 17V7.5h3.2a3 3 0 0 1 0 6H9.5"/>',
+    pin:'<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.8"/>',
+    truck:'<path d="M1.5 5h13v11h-13z"/><path d="M14.5 9h4l3.5 3.5V16h-7.5z"/><circle cx="6" cy="18.3" r="2.2"/><circle cx="17.5" cy="18.3" r="2.2"/>',
+    alert:'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/>',
+    radio:'<circle cx="12" cy="12" r="2"/><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>',
+    headset:'<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>'
+  };
+  var SPARK='<path d="M12 1.5c.9 5.9 3.6 8.6 9.5 9.5-5.9.9-8.6 3.6-9.5 9.5-.9-5.9-3.6-8.6-9.5-9.5 5.9-.9 8.6-3.6 9.5-9.5z"/><path d="M19.8.6c.3 1.9 1.2 2.8 3.1 3.1-1.9.3-2.8 1.2-3.1 3.1-.3-1.9-1.2-2.8-3.1-3.1 1.9-.3 2.8-1.2 3.1-3.1z"/>';
+  var ST=[
+    {n:'Dispatch',l:['Dispatch'],ic:'target',sats:[
+      {n:'Cities & states',ic:'landmark',x:338,y:72,s:'l'}]},
+    {n:'On the road',l:['On the','road'],ic:'car',sats:[
+      {n:'Rider support',ic:'headset',x:700,y:66,s:'r'},
+      {n:'Remote ops',ic:'radio',x:905,y:128,s:'b'},
+      {n:'Incidents & collisions',l:['Incidents &','collisions'],ic:'alert',x:948,y:268,s:'b'}]},
+    {n:'Back to depot',l:['Back to','depot'],ic:'depot',sats:[
+      {n:'Roadside & towing',l:['Roadside &','towing'],ic:'truck',x:948,y:432,s:'b'},
+      {n:'Satellite sites',ic:'pin',x:896,y:570,s:'b'},
+      {n:'Parking',ic:'parking',x:706,y:612,s:'b'}]},
+    {n:'Charging',l:['Charging'],ic:'battery',sats:[
+      {n:'Power grid',ic:'zap',x:345,y:612,s:'l'}]},
+    {n:'Clean & inspect',l:['Clean &','inspect'],ic:'search',sats:[
+      {n:'Crews',ic:'user',x:128,y:520,s:'b'}]},
+    {n:'Maintenance',l:['Maintenance'],ic:'tool',sats:[
+      {n:'Vendors & parts',l:['Vendors &','parts'],ic:'rings',x:100,y:318,s:'b'},
+      {n:'Service centers',ic:'building',x:150,y:150,s:'b'}]}
+  ];
+  var LAY={
+    wide:{w:1040,h:690,cx:520,cy:335,rx:250,ry:205,nr:66,hr:78,sr:28,ni:34,hi:38,nf:14,hf:16.5,sf:13.5,car:7,sats:true},
+    narrow:{w:340,h:340,cx:170,cy:170,rx:118,ry:118,nr:44,hr:42,sr:0,ni:21,hi:20,nf:9.4,hf:9.6,sf:0,car:4.6,sats:false}
+  };
+  var SEG=2.8, TR=0.44;            /* seconds per stage, share of it spent travelling */
+  var reduce=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var stage=root.querySelector('.ops-stage'), head=root.querySelector('.ops-head'), status=root.querySelector('.ops-status');
+  var btn=root.querySelector('.ops-toggle'), outK=root.querySelector('[data-ops="k"]'), outV=root.querySelector('[data-ops="v"]'), outC=root.querySelector('[data-ops="chips"]');
+  var tau=TR*SEG, last=0, raf=0, running=!reduce, visible=true, hover=null, lock=null, mode=null, L=null, P=null, shown={act:-2,sel:-2};
+
+  function el(tag,a,parent){var n=document.createElementNS(NS,tag);for(var k in a)n.setAttribute(k,a[k]);if(parent)parent.appendChild(n);return n;}
+  function ang(f){return (-90+60*f)*Math.PI/180;}
+  function pt(f){var a=ang(f);return [L.cx+L.rx*Math.cos(a),L.cy+L.ry*Math.sin(a)];}
+  function ease(u){return u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;}
+  function r1(v){return Math.round(v*10)/10;}
+  function icon(name,x,y,size,parent){var g=el('g',{transform:'translate('+r1(x-size/2)+','+r1(y-size/2)+') scale('+r1(size/24*100)/100+')'},parent);if(name==='spark'){g=el('g',{'class':'spark'},g);g.innerHTML=SPARK;}else{g.setAttribute('class','ico');g.innerHTML=IC[name];}return g;}
+  function label(lines,x,y,size,gap,cls,anchor,parent){
+    var t=el('text',{'class':cls,x:r1(x),y:r1(y),'font-size':size},parent);
+    if(anchor)t.setAttribute('text-anchor',anchor);
+    lines.forEach(function(s,i){var ts=el('tspan',{x:r1(x)},t);if(i)ts.setAttribute('dy',gap);ts.textContent=s.toUpperCase();});
+    return t;
+  }
+  function edge(i,dir){            /* how far along the track (in stages) the car is still under stage i's circle */
+    var c=pt(i),lo=0,hi=.5,want=L.nr-L.car*.5;
+    for(var n=0;n<18;n++){var mid=(lo+hi)/2,p=pt(i+dir*mid),dx=p[0]-c[0],dy=p[1]-c[1];if(Math.sqrt(dx*dx+dy*dy)<want)lo=mid;else hi=mid;}
+    return dir*lo;
+  }
+  function ringPath(x,y,r){return 'M'+r1(x)+' '+r1(y-r)+'A'+r+' '+r+' 0 1 1 '+r1(x)+' '+r1(y+r)+'A'+r+' '+r+' 0 1 1 '+r1(x)+' '+r1(y-r);}
+  function seg(ax,ay,bx,by,ra,rb){var dx=bx-ax,dy=by-ay,d=Math.sqrt(dx*dx+dy*dy)||1,ux=dx/d,uy=dy/d;return 'M'+r1(ax+ux*ra)+' '+r1(ay+uy*ra)+'L'+r1(bx-ux*rb)+' '+r1(by-uy*rb);}
+
+  function build(m){
+    mode=m;L=LAY[m];root.setAttribute('data-mode',m);
+    var old=stage.querySelector('svg');if(old)stage.removeChild(old);
+    var svg=el('svg',{viewBox:'0 0 '+L.w+' '+L.h,role:'group','aria-label':'Fleet operations cycle. Select a stage to see what supports it.'},stage);
+    el('circle',{'class':'wave',cx:L.cx,cy:L.cy,r:L.hr},svg);
+    el('circle',{'class':'wave b',cx:L.cx,cy:L.cy,r:L.hr},svg);
+    el('ellipse',{'class':'trk',cx:L.cx,cy:L.cy,rx:L.rx,ry:L.ry},svg);
+    for(var c=0;c<6;c++){
+      var a=ang(c+.5),p=pt(c+.5),rot=Math.atan2(L.ry*Math.cos(a),-L.rx*Math.sin(a))*180/Math.PI,k=m==='wide'?7:4.5;
+      el('path',{'class':'chev',d:'M'+(-k)+' '+(-k)+'L'+r1(k*.5)+' 0L'+(-k)+' '+k,transform:'translate('+r1(p[0])+','+r1(p[1])+') rotate('+r1(rot)+')'},svg);
+    }
+    var cars=el('g',{},svg),trail=[],ghosts=[];
+    for(var t=0;t<5;t++)trail.push(el('circle',{'class':'trail',r:r1(L.car*(.78-t*.12))},cars));
+    for(var g=0;g<2;g++)ghosts.push(el('circle',{'class':'ghost',r:r1(L.car*.62)},cars));
+    var car=el('g',{},cars);
+    el('circle',{'class':'glow',r:r1(L.car*2)},car);el('circle',{'class':'car',r:L.car},car);
+    var hub=el('g',{},svg);
+    el('circle',{'class':'hub',cx:L.cx,cy:L.cy,r:L.hr},hub);
+    icon('spark',L.cx,L.cy-L.hr*.3,L.hi,hub);
+    label(['AI agents','+ robotics'],L.cx,L.cy+L.hr*.27,L.hf,r1(L.hf*1.2),'hlab',null,hub);
+    var sts=[],sats=[],progs=[],out=[],inn=[];
+    ST.forEach(function(s,i){
+      var p=pt(i),two=s.l.length>1;
+      var g=el('g',{'class':'st',tabindex:'0',role:'button','aria-label':s.n+'. Supported by: '+s.sats.map(function(x){return x.n;}).join(', ')+'.'},svg);
+      var d=seg(L.cx,L.cy,p[0],p[1],L.hr,L.nr);
+      el('path',{'class':'spoke',d:d},g);
+      el('path',{'class':'pulse',d:d,pathLength:'100'},g);
+      progs.push(el('path',{'class':'prog',d:ringPath(p[0],p[1],L.nr+(m==='wide'?8:6)),pathLength:'100',opacity:'0'},g));
+      out.push(edge(i,1));inn.push(edge(i,-1));
+      el('circle',{'class':'node',cx:r1(p[0]),cy:r1(p[1]),r:L.nr},g);
+      icon(s.ic,p[0],p[1]-L.nr*(two?.36:.26),L.ni,g);
+      label(s.l,p[0],p[1]+L.nr*(two?.2:.4),L.nf,r1(L.nf*1.2),'lab',null,g);
+      bind(g,i,true);sts.push(g);
+      if(!L.sats)return;
+      s.sats.forEach(function(x){
+        var q=el('g',{'class':'sat'},svg);
+        el('path',{'class':'link',d:seg(p[0],p[1],x.x,x.y,L.nr,L.sr)},q);
+        el('circle',{'class':'ring',cx:x.x,cy:x.y,r:L.sr},q);
+        icon(x.ic,x.x,x.y,26,q);
+        var lines=x.l||[x.n];
+        if(x.s==='b')label(lines,x.x,x.y+L.sr+21,L.sf,17,'slab','middle',q);
+        else label(lines,x.x+(x.s==='l'?-1:1)*(L.sr+13),x.y+5,L.sf,17,'slab',x.s==='l'?'end':'start',q);
+        bind(q,i,false);sats.push({g:q,i:i});
+      });
+    });
+    svg.addEventListener('click',function(){if(lock!==null){lock=null;draw();}});
+    P={svg:svg,car:car,trail:trail,ghosts:ghosts,sts:sts,sats:sats,progs:progs,out:out,inn:inn};
+    shown={act:-2,sel:-2};draw();
+  }
+  function bind(g,i,keys){
+    g.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'){hover=i;draw();}});
+    g.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse'){hover=null;draw();}});
+    g.addEventListener('click',function(e){e.stopPropagation();lock=lock===i?null:i;draw();});
+    if(!keys)return;
+    g.addEventListener('focus',function(){hover=i;draw();});
+    g.addEventListener('blur',function(){hover=null;draw();});
+    g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();lock=lock===i?null:i;draw();}});
+  }
+  function where(t){                 /* track position f (in stages), current stage i, docked?, progress u of that phase */
+    var s=t/SEG,k=Math.floor(s),u=s-k,i=((k%6)+6)%6;
+    if(u<TR){var a=i-1+P.out[(i+5)%6],b=i+P.inn[i];return {f:a+(b-a)*ease(u/TR),i:i,docked:false,u:u/TR};}
+    return {f:i+P.inn[i],i:i,docked:true,u:(u-TR)/(1-TR)};
+  }
+  function fade(w){return w.docked?0:Math.min(1,w.u*7,(1-w.u)*7);}
+  function place(node,f){var p=pt(f);node.setAttribute('transform','translate('+r1(p[0])+','+r1(p[1])+')');}
+  function draw(){
+    if(!P)return;
+    var s=where(tau),vis=fade(s);place(P.car,s.f);P.car.setAttribute('opacity',r1(vis));
+    P.trail.forEach(function(c,j){var w=where(tau-(j+1)*.05);place(c,w.f);c.setAttribute('opacity',!w.docked&&w.i===s.i?r1(vis*(.5-j*.09)):0);});
+    P.ghosts.forEach(function(c,j){var w=where(tau+((j+1)*2+.5)*SEG);place(c,w.f);c.setAttribute('opacity',r1(fade(w)*.45));});
+    P.progs.forEach(function(c,i){                 /* the ring fills while the car is at the stage, then fades as it leaves */
+      var on=s.docked&&s.i===i,left=!s.docked&&(s.i+5)%6===i;
+      c.setAttribute('stroke-dashoffset',on?r1(100*(1-s.u)):0);
+      c.setAttribute('opacity',on?1:left?r1(Math.max(0,1-s.u*2.2)):0);
+    });
+    var sel=lock!==null?lock:hover,act=sel!==null?sel:s.i;
+    if(act!==shown.act){
+      P.sts.forEach(function(g,i){g.classList.toggle('on',i===act);g.setAttribute('aria-pressed',lock===i?'true':'false');});
+      P.sats.forEach(function(x){x.g.classList.toggle('on',x.i===act);});
+      outV.textContent=ST[act].n;outC.textContent='';
+      ST[act].sats.forEach(function(x){var c=document.createElement('span');c.textContent=x.n;outC.appendChild(c);});
+      shown.act=act;
+    }
+    if(sel!==shown.sel){P.svg.classList.toggle('has-sel',sel!==null);outK.textContent=sel!==null?'Selected stage':'Following one car';
+      P.sts.forEach(function(g,i){g.setAttribute('aria-pressed',lock===i?'true':'false');});shown.sel=sel;}
+  }
+  function frame(ts){
+    if(last)tau+=Math.min(.1,(ts-last)/1000);
+    last=ts;draw();raf=requestAnimationFrame(frame);
+  }
+  function loop(){
+    var go=running&&visible&&!document.hidden;
+    if(go&&!raf){last=0;raf=requestAnimationFrame(frame);}
+    if(!go&&raf){cancelAnimationFrame(raf);raf=0;}
+  }
+  function sync(){
+    btn.textContent=running?'Pause':'Play';
+    btn.setAttribute('aria-label',running?'Pause the animation':'Play the animation');
+    root.classList.toggle('is-paused',!running);loop();
+  }
+  function pick(){return root.clientWidth>=760?'wide':'narrow';}
+
+  head.hidden=false;status.hidden=false;
+  build(pick());
+  btn.addEventListener('click',function(){running=!running;sync();});
+  if(window.ResizeObserver)new ResizeObserver(function(){var m=pick();if(m!==mode)build(m);}).observe(root);
+  else window.addEventListener('resize',function(){var m=pick();if(m!==mode)build(m);});
+  if(window.IntersectionObserver)new IntersectionObserver(function(es){visible=es[es.length-1].isIntersecting;loop();},{rootMargin:'120px'}).observe(root);
+  document.addEventListener('visibilitychange',loop);
+  sync();
+})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "Arunkumar Arunagiri",
+      "alternateName": "Arun Arunagiri",
+      "jobTitle": "Co-founder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "TARS AI",
+        "url": "https://tarsai.co"
+      },
+      "description": "Co-founder of TARS AI. Focused on robotaxi market entry and fleet operations.",
+      "knowsAbout": [
+        "Robotaxi fleet operations",
+        "Autonomous vehicle depots",
+        "Fleet partnerships with autonomous vehicle developers",
+        "Mixed fleets of human-driven and autonomous vehicles"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "California",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/arunkumararunagiri",
+        "https://tarsai.co",
+        "https://www.tiktok.com/@arunkumar.arunagiri",
+        "https://www.youtube.com/@arunkumar.arunagiri"
+      ]
+    },
+    {"@type": "VideoObject", "name": "Why I\u2019m building TARS AI: making robotaxis pay at scale", "description": "Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.", "thumbnailUrl": "https://i.ytimg.com/vi/g5eesldPLqQ/maxresdefault.jpg", "uploadDate": "2026-11-08T07:36:51+00:00", "url": "https://www.youtube.com/watch?v=g5eesldPLqQ", "embedUrl": "https://www.youtube.com/embed/g5eesldPLqQ", "position": 1, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "The hidden workforce behind robotaxis", "description": "Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.", "thumbnailUrl": "https://i.ytimg.com/vi/ic6VA8gJRpY/maxresdefault.jpg", "uploadDate": "2026-11-08T16:49:32+00:00", "url": "https://www.youtube.com/watch?v=ic6VA8gJRpY", "embedUrl": "https://www.youtube.com/embed/ic6VA8gJRpY", "position": 2, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "3 chargers down before rush hour: which robotaxi do you charge first?", "description": "Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.", "thumbnailUrl": "https://i.ytimg.com/vi/1YUuHlvwKU0/maxresdefault.jpg", "uploadDate": "2026-11-08T16:55:18+00:00", "url": "https://www.youtube.com/watch?v=1YUuHlvwKU0", "embedUrl": "https://www.youtube.com/embed/1YUuHlvwKU0", "position": 3, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
+    {"@type": "VideoObject", "name": "Would you let AI run the robotaxi depot?", "description": "What would it take to coordinate depot operations with AI agents?", "thumbnailUrl": "https://i.ytimg.com/vi/YYi2Dky8X2g/maxresdefault.jpg", "uploadDate": "2026-11-08T21:08:11+00:00", "url": "https://www.youtube.com/watch?v=YYi2Dky8X2g", "embedUrl": "https://www.youtube.com/embed/YYi2Dky8X2g", "position": 4, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}}
+  ]
+}
+</script>
+</body></html>
