@@ -10,10 +10,12 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | Path | What it is |
 | --- | --- |
 | `index.html` | The built page. Generated, do not edit by hand. |
-| `img/` | Portrait, episode title cards, and the static fallback for the diagram. |
+| `img/` | Portrait, episode title cards, the 192px icon, and the static fallback for the diagram. |
+| `favicon.ico`, `apple-touch-icon.png` | Browser tab and home screen icons, made from the portrait. |
 | `src/page.html` | The page copy and styles. Edit this. |
 | `src/ops.html`, `src/ops.css`, `src/ops.js` | The animated operations diagram in the TARS AI section. |
 | `src/build.py` | Assembles `index.html` from the files above. |
+| `src/make_icons.py` | Makes the icons from the portrait. See Icons below. |
 | `src/videos.json`, `src/update_videos.py` | The video list and the script that keeps it current. See Videos below. |
 | `.github/workflows/update-videos.yml` | Runs the video update twice a day. |
 | `CNAME` | The custom domain GitHub Pages serves. |
@@ -38,6 +40,13 @@ and similar characters into HTML entities, so the page reads correctly wherever 
 Stages and their supporting functions are the `ST` list at the top of `src/ops.js`. To add or rename one, edit
 that list. Positions are in a 1040 by 690 box. Below 760px of width the diagram shows the six stages only and
 lists the supporting functions underneath. It starts paused when the visitor's system asks for reduced motion.
+
+## Icons
+
+The browser tab icon is the portrait, cropped to the head. `favicon.ico`, `img/icon-192.png` and
+`apple-touch-icon.png` are made from `img/profile.jpg` by `src/make_icons.py`. Run that script only when
+the portrait changes, after moving the crop box at the top of it, and commit the three files it writes.
+It needs the Pillow package, which the normal build does not.
 
 ## Videos
 
