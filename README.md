@@ -14,6 +14,8 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | `src/page.html` | The page copy and styles. Edit this. |
 | `src/ops.html`, `src/ops.css`, `src/ops.js` | The animated operations diagram in the TARS AI section. |
 | `src/build.py` | Assembles `index.html` from the files above. |
+| `src/videos.json`, `src/update_videos.py` | The video list and the script that keeps it current. See Videos below. |
+| `.github/workflows/update-videos.yml` | Runs the video update twice a day. |
 | `CNAME` | The custom domain GitHub Pages serves. |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are. |
 
@@ -39,5 +41,19 @@ lists the supporting functions underneath. It starts paused when the visitor's s
 
 ## Videos
 
-Each episode in the series has a card in `src/page.html` and a `VideoObject` entry in the structured data at
-the bottom of the same file. Add both for a new episode.
+The series section shows the four newest videos from the YouTube channel, newest first, and keeps itself
+up to date.
+
+- `src/videos.json` is the list of every video seen so far, with its episode number.
+- `src/update_videos.py` reads the channel feed and adds new videos to the list, with a thumbnail under `img/`.
+- `.github/workflows/update-videos.yml` runs that script twice a day, rebuilds `index.html`, and commits
+  to `main` when something changed. The commit publishes the site. It can also be run by hand from the
+  Actions tab.
+
+A new card takes its title from YouTube and its blurb from the first sentences of the video description.
+To word a card by hand, add `"display_title"` or `"blurb"` to that video in `src/videos.json`. To keep a
+video off the page, add `"hide": true`. To show more or fewer cards, change `"show"`.
+
+YouTube's feed is sometimes unavailable for hours. A run that cannot read it changes nothing, and the next
+run tries again. GitHub pauses scheduled workflows in a repository that has had no activity for 60 days.
+It sends an email first, and the workflow can be switched back on from the Actions tab.

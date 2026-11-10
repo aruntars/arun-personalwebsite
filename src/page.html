@@ -140,6 +140,8 @@ p{margin:0}
 .episodes .w{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-text); margin-top:auto; padding-top:4px}
 .episodes .ep:hover .w{text-decoration:underline}
 @media (max-width:860px){ .episodes{grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px} }
+.more{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase}
+.more a{color:var(--accent-text); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:4px}
 
 /* questions, written out in full so search and AI assistants can read them */
 .qa{display:grid; gap:26px; max-width:66ch}
@@ -256,44 +258,8 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8p
       <div class="body">
         <h2>The 1 to N series</h2>
         <p class="intro">Short videos on the operational questions behind autonomous fleets: the people, decisions and systems that keep cars ready for service.</p>
-        <ol class="episodes">
-          <li>
-            <a class="ep" href="https://www.youtube.com/watch?v=g5eesldPLqQ" target="_blank" rel="noopener">
-              <img src="img/ep-01.jpg" width="405" height="720" loading="lazy" alt="Episode 1 title card: Why I'm building TARS AI">
-              <span class="n">EP 01</span>
-              <span class="t">Why I'm building TARS AI</span>
-              <span class="d">Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.</span>
-              <span class="w">Watch on YouTube</span>
-            </a>
-          </li>
-          <li>
-            <a class="ep" href="https://www.youtube.com/watch?v=ic6VA8gJRpY" target="_blank" rel="noopener">
-              <img src="img/ep-02.jpg" width="405" height="720" loading="lazy" alt="Episode 2 title card: The hidden workforce behind robotaxis">
-              <span class="n">EP 02</span>
-              <span class="t">The hidden workforce behind robotaxis</span>
-              <span class="d">Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.</span>
-              <span class="w">Watch on YouTube</span>
-            </a>
-          </li>
-          <li>
-            <a class="ep" href="https://www.youtube.com/watch?v=1YUuHlvwKU0" target="_blank" rel="noopener">
-              <img src="img/ep-03.jpg" width="405" height="720" loading="lazy" alt="Episode 3 title card: Which car do you charge first?">
-              <span class="n">EP 03</span>
-              <span class="t">Which robotaxi do you charge first?</span>
-              <span class="d">Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.</span>
-              <span class="w">Watch on YouTube</span>
-            </a>
-          </li>
-          <li>
-            <a class="ep" href="https://www.youtube.com/watch?v=YYi2Dky8X2g" target="_blank" rel="noopener">
-              <img src="img/ep-04.jpg" width="405" height="720" loading="lazy" alt="Episode 4 title card: Would you let AI run the robotaxi depot?">
-              <span class="n">EP 04</span>
-              <span class="t">Would you let AI run the robotaxi depot?</span>
-              <span class="d">What would it take to coordinate depot operations with AI agents?</span>
-              <span class="w">Watch on YouTube</span>
-            </a>
-          </li>
-        </ol>
+        <ol class="episodes"><!-- built from src/videos.json by src/build.py --></ol>
+        <p class="more"><a href="https://www.youtube.com/@arunkumar.arunagiri" target="_blank" rel="noopener">All episodes on YouTube</a></p>
       </div>
     </div>
   </section>
@@ -347,11 +313,7 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8p
         "https://www.tiktok.com/@arunkumar.arunagiri",
         "https://www.youtube.com/@arunkumar.arunagiri"
       ]
-    },
-    {"@type": "VideoObject", "name": "Why I’m building TARS AI: making robotaxis pay at scale", "description": "Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.", "thumbnailUrl": "https://i.ytimg.com/vi/g5eesldPLqQ/maxresdefault.jpg", "uploadDate": "2026-11-08T07:36:51+00:00", "url": "https://www.youtube.com/watch?v=g5eesldPLqQ", "embedUrl": "https://www.youtube.com/embed/g5eesldPLqQ", "position": 1, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
-    {"@type": "VideoObject", "name": "The hidden workforce behind robotaxis", "description": "Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.", "thumbnailUrl": "https://i.ytimg.com/vi/ic6VA8gJRpY/maxresdefault.jpg", "uploadDate": "2026-11-08T16:49:32+00:00", "url": "https://www.youtube.com/watch?v=ic6VA8gJRpY", "embedUrl": "https://www.youtube.com/embed/ic6VA8gJRpY", "position": 2, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
-    {"@type": "VideoObject", "name": "3 chargers down before rush hour: which robotaxi do you charge first?", "description": "Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.", "thumbnailUrl": "https://i.ytimg.com/vi/1YUuHlvwKU0/maxresdefault.jpg", "uploadDate": "2026-11-08T16:55:18+00:00", "url": "https://www.youtube.com/watch?v=1YUuHlvwKU0", "embedUrl": "https://www.youtube.com/embed/1YUuHlvwKU0", "position": 3, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}},
-    {"@type": "VideoObject", "name": "Would you let AI run the robotaxi depot?", "description": "What would it take to coordinate depot operations with AI agents?", "thumbnailUrl": "https://i.ytimg.com/vi/YYi2Dky8X2g/maxresdefault.jpg", "uploadDate": "2026-11-08T21:08:11+00:00", "url": "https://www.youtube.com/watch?v=YYi2Dky8X2g", "embedUrl": "https://www.youtube.com/embed/YYi2Dky8X2g", "position": 4, "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series"}, "author": {"@type": "Person", "name": "Arunkumar Arunagiri"}}
+    }
   ]
 }
 </script>
