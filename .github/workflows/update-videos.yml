@@ -1,0 +1,48 @@
+name: Update videos
+
+# Twice a day, read the YouTube channel feed. If there is a new video, add it to src/videos.json,
+# rebuild index.html and commit both to main, which publishes the site. YouTube's feed is sometimes
+# unavailable for hours, so a run that cannot read it changes nothing and the next run tries again.
+
+on:
+  schedule:
+    - cron: "23 3,15 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: update-videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Read the channel feed
+        run: python3 src/update_videos.py
+
+      - name: Rebuild the page
+        run: python3 src/build.py
+
+      - name: Publish if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No new videos. Nothing to publish."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/videos.json index.html img
+          git commit -m "Update the series with the latest videos"
+          git push
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" > /dev/null \
+            || echo "The extra Pages build request was not accepted. The push itself still triggers a build."

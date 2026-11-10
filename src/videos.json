@@ -1,0 +1,44 @@
+{
+  "channel_id": "UCnUphWEh8Ksdy3riQJ_ThwA",
+  "show": 4,
+  "videos": [
+    {
+      "id": "g5eesldPLqQ",
+      "episode": 1,
+      "published": "2026-11-08T07:36:51+00:00",
+      "title": "Why I’m building TARS AI: making robotaxis pay at scale",
+      "display_title": "Why I'm building TARS AI",
+      "blurb": "Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next.",
+      "thumb": "img/ep-01.jpg",
+      "auto_blurb": "Getting robotaxis on the road is one challenge. Keeping thousands running profitably is the next. I co-founded TARS AI to tackle that."
+    },
+    {
+      "id": "ic6VA8gJRpY",
+      "episode": 2,
+      "published": "2026-11-08T16:49:32+00:00",
+      "title": "The hidden workforce behind robotaxis",
+      "blurb": "Robotaxis have no drivers, but they still need a workforce. The job postings show who they are.",
+      "thumb": "img/ep-02.jpg",
+      "auto_blurb": "Robotaxis don’t have drivers, but a thousand-car fleet still needs 500 to 700 people. The job postings show who they are and what they do."
+    },
+    {
+      "id": "1YUuHlvwKU0",
+      "episode": 3,
+      "published": "2026-11-08T16:55:18+00:00",
+      "title": "3 chargers down before rush hour: which robotaxi do you charge first?",
+      "display_title": "Which robotaxi do you charge first?",
+      "blurb": "Rush hour starts in 60 minutes and three chargers are down. Lowest battery first is usually the wrong call.",
+      "thumb": "img/ep-03.jpg",
+      "auto_blurb": "Rush hour starts in 60 minutes and 3 chargers are down. Lowest battery first is usually the wrong call. Here is how to pick which robotaxi charges first."
+    },
+    {
+      "id": "YYi2Dky8X2g",
+      "episode": 4,
+      "published": "2026-11-08T21:08:11+00:00",
+      "title": "Would you let AI run the robotaxi depot?",
+      "blurb": "What would it take to coordinate depot operations with AI agents?",
+      "thumb": "img/ep-04.jpg",
+      "auto_blurb": "How AI agents run a robotaxi depot as one system: more uptime, better utilization, lower cost per mile."
+    }
+  ]
+}
