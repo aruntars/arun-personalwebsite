@@ -109,7 +109,8 @@ if "--artifact" in sys.argv:
     body_close = out.rindex("</body>")
     head = out[:head_end]
     desc = re.search(r'<meta name="description"[^>]*>', head).group(0)
-    links = "\n".join(re.findall(r"<link [^>]*>", head))
+    # The artifact has its own icon, so the favicon links stay out of it.
+    links = "\n".join(l for l in re.findall(r"<link [^>]*>", head) if not re.search(r'rel="(?:apple-touch-)?icon"', l))
     style = head[head.index("<style>"):head.index("</style>") + len("</style>")]
     frag = "\n".join(['<meta charset="utf-8">', "<title>Arunkumar Arunagiri</title>", '<meta name="claude:viewport-fit-sides" content="cover">',
                       desc, links, style, out[body_open + len("<body>"):body_close].strip(), ""])
