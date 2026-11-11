@@ -21,10 +21,12 @@ css = (here / "ops.css").read_text(encoding="utf-8")
 html = (here / "ops.html").read_text(encoding="utf-8").strip()
 js = (here / "ops.js").read_text(encoding="utf-8").strip()
 
-# The series: the newest videos from src/videos.json, newest first.
+# The series: every video in src/videos.json, newest first. A "show" above 0 keeps only that many.
 ledger = json.loads((here / "videos.json").read_text(encoding="utf-8"))
 shown = sorted((v for v in ledger["videos"] if not v.get("hide")), key=lambda v: v["published"], reverse=True)
-shown = shown[: int(ledger.get("show", 4))]
+limit = int(ledger.get("show", 0))
+if limit > 0:
+    shown = shown[:limit]
 cards, nodes = [], []
 for v in shown:
     assert re.fullmatch(r"[A-Za-z0-9_-]{11}", v["id"]), "unexpected video id"
@@ -59,6 +61,9 @@ for v in shown:
 ol = re.compile(r'(<ol class="episodes">).*?(</ol>)', re.S)
 assert len(ol.findall(src)) == 1, "expected exactly one episodes list"
 src = ol.sub(lambda m: m.group(1) + "\n" + "\n".join(cards) + "\n" + m.group(2), src)
+count = re.compile(r'(<span class="ep-count">).*?(</span>)', re.S)
+assert len(count.findall(src)) == 1, "expected exactly one episode count"
+src = count.sub(lambda m: m.group(1) + "%d episode%s" % (len(shown), "" if len(shown) == 1 else "s") + m.group(2), src)
 block = re.search(r'(<script type="application/ld\+json">)(.*?)(</script>)', src, re.S)
 data = json.loads(block.group(2))
 data["@graph"] = [n for n in data["@graph"] if n.get("@type") != "VideoObject"] + nodes
