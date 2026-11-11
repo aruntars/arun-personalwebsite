@@ -21,9 +21,11 @@ css = (here / "ops.css").read_text(encoding="utf-8")
 html = (here / "ops.html").read_text(encoding="utf-8").strip()
 js = (here / "ops.js").read_text(encoding="utf-8").strip()
 
-# The series: every video in src/videos.json, newest first. A "show" above 0 keeps only that many.
+# The series: every video in src/videos.json, pinned ones first, then newest first.
+# A "show" above 0 keeps only that many.
 ledger = json.loads((here / "videos.json").read_text(encoding="utf-8"))
 shown = sorted((v for v in ledger["videos"] if not v.get("hide")), key=lambda v: v["published"], reverse=True)
+shown.sort(key=lambda v: not v.get("pin"))
 limit = int(ledger.get("show", 0))
 if limit > 0:
     shown = shown[:limit]
@@ -37,7 +39,7 @@ for v in shown:
         "<li>",
         '<a class="ep" href="%s" target="_blank" rel="noopener">' % watch,
         '<img src="%s" width="405" height="720" loading="lazy" alt="Episode %d title card: %s">' % (escape(v["thumb"]), v["episode"], escape(title)),
-        '<span class="n">EP %02d</span>' % v["episode"],
+        '<span class="n">EP %02d%s</span>' % (v["episode"], " \u00b7 <b>Start here</b>" if v.get("pin") else ""),
         '<span class="t">%s</span>' % escape(title, quote=False),
     ]
     if blurb:

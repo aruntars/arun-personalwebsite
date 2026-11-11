@@ -63,8 +63,9 @@ scrolls.
 
 A new card takes its title from YouTube and its blurb from the first sentences of the video description.
 To word a card by hand, add `"display_title"` or `"blurb"` to that video in `src/videos.json`. To keep a
-video off the page, add `"hide": true`. `"show"` is `0`, which means every video. A number above 0 keeps
-only that many of the newest.
+video off the page, add `"hide": true`. To keep a video at the front of the strip, ahead of newer ones,
+add `"pin": true`. Its card is then marked "Start here". `"show"` is `0`, which means every video. A number
+above 0 keeps only that many, pinned ones first.
 
 YouTube's feed is sometimes unavailable for hours. A run that cannot read it changes nothing, and the next
 run tries again. GitHub pauses scheduled workflows in a repository that has had no activity for 60 days.
