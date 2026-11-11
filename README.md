@@ -50,8 +50,10 @@ It needs the Pillow package, which the normal build does not.
 
 ## Videos
 
-The series section shows the four newest videos from the YouTube channel, newest first, and keeps itself
-up to date.
+The series section shows every video from the YouTube channel in one strip that scrolls sideways, newest
+first, and keeps itself up to date. The strip can be swiped or scrolled, and two arrow buttons move it by
+the cards in view. The arrows are added by a script in `src/page.html`. Without scripts the strip still
+scrolls.
 
 - `src/videos.json` is the list of every video seen so far, with its episode number.
 - `src/update_videos.py` reads the channel feed and adds new videos to the list, with a thumbnail under `img/`.
@@ -61,7 +63,8 @@ up to date.
 
 A new card takes its title from YouTube and its blurb from the first sentences of the video description.
 To word a card by hand, add `"display_title"` or `"blurb"` to that video in `src/videos.json`. To keep a
-video off the page, add `"hide": true`. To show more or fewer cards, change `"show"`.
+video off the page, add `"hide": true`. `"show"` is `0`, which means every video. A number above 0 keeps
+only that many of the newest.
 
 YouTube's feed is sometimes unavailable for hours. A run that cannot read it changes nothing, and the next
 run tries again. GitHub pauses scheduled workflows in a repository that has had no activity for 60 days.
