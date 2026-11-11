@@ -39,6 +39,14 @@
       "blurb": "What would it take to coordinate depot operations with AI agents?",
       "thumb": "img/ep-04.jpg",
       "auto_blurb": "How AI agents run a robotaxi depot as one system: more uptime, better utilization, lower cost per mile."
+    },
+    {
+      "id": "GFvG8XAWaII",
+      "published": "2026-11-11T00:36:22+00:00",
+      "title": "Why robotaxis need their own depots: power, deadhead and control",
+      "auto_blurb": "Every city already has places to charge, clean and fix cars. Almost none of it was built for robotaxis.",
+      "episode": 5,
+      "thumb": "img/yt-GFvG8XAWaII.jpg"
     }
   ]
 }
