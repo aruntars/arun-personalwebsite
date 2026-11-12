@@ -12,6 +12,7 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | `index.html` | The built page. Generated, do not edit by hand. |
 | `img/` | Portrait, episode title cards, the 192px icon, and the static fallback for the diagram. |
 | `robots.txt`, `sitemap.xml` | Tell search engines the site may be read and where its one page is. |
+| `googleeadd50194bc2fe6b.html` | Proves to Google Search Console that Arun owns the site. Keep it, or the site loses its verified status. |
 | `src/og.html` | Source of `img/og.jpg`, the picture shown when the link is shared. See Search and sharing below. |
 | `favicon.ico`, `apple-touch-icon.png` | Browser tab and home screen icons, made from the portrait. |
 | `src/page.html` | The page copy and styles. Edit this. |
