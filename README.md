@@ -17,7 +17,7 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | `src/build.py` | Assembles `index.html` from the files above. |
 | `src/make_icons.py` | Makes the icons from the portrait. See Icons below. |
 | `src/videos.json`, `src/update_videos.py` | The video list and the script that keeps it current. See Videos below. |
-| `.github/workflows/update-videos.yml` | Runs the video update twice a day. |
+| `.github/workflows/update-videos.yml` | Runs the video update every hour. |
 | `CNAME` | The custom domain GitHub Pages serves. |
 | `.nojekyll` | Tells GitHub Pages to serve the files as they are. |
 
@@ -57,7 +57,7 @@ scrolls.
 
 - `src/videos.json` is the list of every video seen so far, with its episode number.
 - `src/update_videos.py` reads the channel feed and adds new videos to the list, with a thumbnail under `img/`.
-- `.github/workflows/update-videos.yml` runs that script twice a day, rebuilds `index.html`, and commits
+- `.github/workflows/update-videos.yml` runs that script every hour, rebuilds `index.html`, and commits
   to `main` when something changed. The commit publishes the site. It can also be run by hand from the
   Actions tab.
 
@@ -67,6 +67,7 @@ video off the page, add `"hide": true`. To keep a video at the front of the stri
 add `"pin": true`. Its card is then marked "Start here". `"show"` is `0`, which means every video. A number
 above 0 keeps only that many, pinned ones first.
 
-YouTube's feed is sometimes unavailable for hours. A run that cannot read it changes nothing, and the next
-run tries again. GitHub pauses scheduled workflows in a repository that has had no activity for 60 days.
+GitHub can start a scheduled run late, sometimes by hours, so a new video can take longer than an hour to
+appear. YouTube's feed is also sometimes unavailable for hours. A run that cannot read it changes nothing,
+and the next run tries again. GitHub pauses scheduled workflows in a repository that has had no activity for 60 days.
 It sends an email first, and the workflow can be switched back on from the Actions tab.
