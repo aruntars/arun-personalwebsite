@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<title>Link preview image</title>
+<!-- The picture shown when the site's link is shared: 1200 by 630. It is a source file, not a page of the site.
+     README.md, under Search and sharing, has the command that turns it into img/og.jpg. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=block">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0; width:1200px; height:630px; overflow:hidden}
+body{background:#0a1118; color:#e9eef2; font-family:"Bricolage Grotesque",system-ui,sans-serif; display:grid; grid-template-columns:minmax(0,1fr) 400px; gap:56px; padding:56px 64px; align-items:stretch}
+.copy{min-width:0; display:flex; flex-direction:column; justify-content:space-between}
+.brand{display:flex; align-items:center; gap:14px; font-weight:800; font-size:28px; letter-spacing:-.01em}
+.brand i{width:14px; height:14px; background:#ffcf00; border-radius:3px; transform:rotate(45deg)}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:19px; letter-spacing:.12em; text-transform:uppercase; color:#ffcf00; margin:0 0 20px}
+h1{margin:0; font-weight:800; font-size:80px; line-height:1; letter-spacing:-.025em}
+h1 em{font-style:normal; color:#ffcf00}
+.foot{font-family:"IBM Plex Mono",monospace; font-size:19px; letter-spacing:.06em; text-transform:uppercase; color:#a3b0ba; display:flex; gap:14px; align-items:center}
+.foot b{font-weight:500; color:#e9eef2}
+.face{width:400px; height:518px; object-fit:cover; object-position:50% 20%; border-radius:10px; border:1px solid #1f2c37; align-self:center}
+</style>
+</head><body>
+<div class="copy">
+  <div class="brand"><i></i>Arunkumar Arunagiri</div>
+  <div>
+    <p class="eyebrow">For owners of human-driven fleets</p>
+    <h1>You have the fleet. <em>What&rsquo;s your robotaxi plan?</em></h1>
+  </div>
+  <div class="foot">Co-founder and Co-CEO, TARS AI <span>&middot;</span> <b>arunkumara.com</b></div>
+</div>
+<img class="face" src="../img/profile.jpg" alt="">
+</body></html>

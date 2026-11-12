@@ -11,6 +11,8 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | --- | --- |
 | `index.html` | The built page. Generated, do not edit by hand. |
 | `img/` | Portrait, episode title cards, the 192px icon, and the static fallback for the diagram. |
+| `robots.txt`, `sitemap.xml` | Tell search engines the site may be read and where its one page is. |
+| `src/og.html` | Source of `img/og.jpg`, the picture shown when the link is shared. See Search and sharing below. |
 | `favicon.ico`, `apple-touch-icon.png` | Browser tab and home screen icons, made from the portrait. |
 | `src/page.html` | The page copy and styles. Edit this. |
 | `src/ops.html`, `src/ops.css`, `src/ops.js` | The animated operations diagram in the TARS AI section. |
@@ -47,6 +49,24 @@ The browser tab icon is the portrait, cropped to the head. `favicon.ico`, `img/i
 `apple-touch-icon.png` are made from `img/profile.jpg` by `src/make_icons.py`. Run that script only when
 the portrait changes, after moving the crop box at the top of it, and commit the three files it writes.
 It needs the Pillow package, which the normal build does not.
+
+## Search and sharing
+
+The head of `src/page.html` holds what search engines and link previews read: the title, the description,
+the canonical address, the Open Graph tags and the structured data about Arun and this page. Keep the title
+under 60 characters and the description under 160, or search results cut them off.
+
+`robots.txt` and `sitemap.xml` are plain files at the root. Edit them by hand if a second page is ever added.
+The build does not write them, because the video workflow only commits the files it expects to change.
+
+`img/og.jpg` is the 1200 by 630 picture that LinkedIn, Slack and others show beside the link. It is drawn by
+`src/og.html`. To make it again after changing the headline or the portrait, render that file with Chrome
+and convert the result to JPEG:
+
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+      --force-device-scale-factor=1 --window-size=1200,630 --virtual-time-budget=8000 \
+      --user-data-dir=/tmp/og-profile --screenshot=/tmp/og.png "file://$PWD/src/og.html"
+    python3 -c "from PIL import Image; Image.open('/tmp/og.png').convert('RGB').save('img/og.jpg', quality=88, optimize=True, progressive=True)"
 
 ## Videos
 
