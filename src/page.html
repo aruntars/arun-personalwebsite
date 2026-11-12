@@ -2,6 +2,18 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Google tag, which counts visits with Google Analytics. The consent lines must run before the tag loads.
+     Advertising signals are off for everyone. Visitors in the EU, the wider EEA, the UK and Switzerland are
+     counted without cookies. Everyone else is counted with Google Analytics cookies. -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted'});
+gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+  region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+gtag('js', new Date());
+</script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WFB22P62"></script>
 <title>Arunkumar Arunagiri | Autonomous vehicle fleet operations</title>
 <meta name="description" content="Arunkumar Arunagiri, co-founder and co-CEO of TARS AI, helps fleet owners plan for autonomous vehicles: robotaxi market entry, sites and mixed fleet operations.">
 <link rel="canonical" href="https://arunkumara.com/">
@@ -200,6 +212,7 @@ p{margin:0}
 
 footer{border-top:1px solid var(--line); padding-block:28px 40px; color:var(--fg-3); font-family:var(--mono); font-size:12px; letter-spacing:.04em}
 footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px}
+footer .note{flex-basis:100%}
 
 .skip{position:fixed;top:8px;left:16px;z-index:20;transform:translateY(-160%);background:var(--accent);color:var(--accent-ink);padding:10px 16px;font-family:var(--display)}
 .skip:focus{transform:translateY(0)}
@@ -317,7 +330,7 @@ footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8p
 </div>
 </div></div></section>
 </main>
-<footer><div class="wrap"><span>&copy; <span id="year">2026</span> Arunkumar Arunagiri · Scaling autonomous fleet operations</span><span>San Francisco Bay Area</span></div></footer>
+<footer><div class="wrap"><span>&copy; <span id="year">2026</span> Arunkumar Arunagiri · Scaling autonomous fleet operations</span><span>San Francisco Bay Area</span><span class="note">This site counts visits with <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Google Analytics</a>.</span></div></footer>
 <script>
 /* Keeps the footer year current. 2026 stays as the fallback when scripts are off. */
 (function(){var y=document.getElementById('year');if(y)y.textContent=Math.max(2026,new Date().getFullYear());})();

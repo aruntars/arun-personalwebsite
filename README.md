@@ -68,6 +68,14 @@ and convert the result to JPEG:
       --user-data-dir=/tmp/og-profile --screenshot=/tmp/og.png "file://$PWD/src/og.html"
     python3 -c "from PIL import Image; Image.open('/tmp/og.png').convert('RGB').save('img/og.jpg', quality=88, optimize=True, progressive=True)"
 
+## Analytics
+
+The Google tag near the top of the head of `src/page.html` sends visits to Google Analytics. Its ID,
+`GTM-WFB22P62`, is public by design. The two `gtag('consent', 'default', ...)` lines must stay above the
+line that loads the tag. They switch advertising signals off for everyone and count visitors in the EU, the
+wider EEA, the UK and Switzerland without cookies. The footer carries a one-line note with Google's link
+about how it uses the data. To stop counting, delete the tag block and the note, then rebuild.
+
 ## Videos
 
 The series section shows every video from the YouTube channel in one strip that scrolls sideways, newest
