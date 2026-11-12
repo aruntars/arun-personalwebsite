@@ -10,6 +10,8 @@
   if (!S) return;
   var NS = 'http://www.w3.org/2000/svg';
   var still = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  /* Adding ?still to the address shows every scene as its finished picture, which is useful for checking a page. */
+  if (/[?&]still\b/.test(location.search)) still = { matches: true };
   var ICON = {
     pause: '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="2" width="3.6" height="12" rx="1"/><rect x="9.4" y="2" width="3.6" height="12" rx="1"/></svg>',
     play: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.2v11.6a.6.6 0 0 0 .9.5l9.2-5.8a.6.6 0 0 0 0-1L4.9 1.7a.6.6 0 0 0-.9.5z"/></svg>'

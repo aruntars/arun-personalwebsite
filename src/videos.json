@@ -4,6 +4,7 @@
   "videos": [
     {
       "id": "g5eesldPLqQ",
+      "slug": "why-im-building-tars-ai",
       "episode": 1,
       "published": "2026-11-08T07:36:51+00:00",
       "title": "Why I’m building TARS AI: making robotaxis pay at scale",
@@ -43,6 +44,7 @@
     },
     {
       "id": "GFvG8XAWaII",
+      "slug": "why-robotaxis-need-their-own-depots",
       "published": "2026-11-11T00:36:22+00:00",
       "title": "Why robotaxis need their own depots: power, deadhead and control",
       "auto_blurb": "Every city already has places to charge, clean and fix cars. Almost none of it was built for robotaxis.",

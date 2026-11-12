@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Google tag, which counts visits with Google Analytics. The consent lines must run before the tag loads.
+     Advertising signals are off for everyone. Visitors in the EU, the wider EEA, the UK and Switzerland are
+     counted without cookies. Everyone else is counted with Google Analytics cookies. -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted'});
+gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+  region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
+gtag('js', new Date());
+</script>
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WFB22P62"></script>
+<title>Why robotaxis need their own depots: power, deadhead and control | Arunkumar Arunagiri</title>
+<meta name="description" content="Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.">
+<link rel="canonical" href="https://arunkumara.com/series/why-robotaxis-need-their-own-depots/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Arunkumar Arunagiri">
+<meta property="og:title" content="Why robotaxis need their own depots: power, deadhead and control">
+<meta property="og:description" content="Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.">
+<meta property="og:url" content="https://arunkumara.com/series/why-robotaxis-need-their-own-depots/">
+<meta property="og:image" content="https://i.ytimg.com/vi/GFvG8XAWaII/maxresdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/icon-192.png">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Shared with the home page: colours, base type, navigation, buttons and footer. src/build.py copies these
+   rules from src/page.html, so change them there. */
+:root{
+  --bg:#0a1118; --bg-2:#0f1922; --bg-3:#16222c; --line:#2a3843; --line-2:#3a4a57;
+  --fg:#e9eef2; --fg-2:#a3b0ba; --fg-3:#95a5b2;
+  --accent:#ffcf00; --accent-text:#ffcf00; --accent-ink:#0a1118; --accent-soft:rgba(255,207,0,.12);
+  --photo-edge:#1f2c37; --shadow:0 18px 50px rgba(0,0,0,.45);
+  --display:"Bricolage Grotesque","Archivo",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+    --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+    --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+    --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#f3f5f7; --bg-2:#ffffff; --bg-3:#e8edf1; --line:#d3dbe2; --line-2:#b9c4ce;
+  --fg:#101922; --fg-2:#4f5f6d; --fg-3:#596b7a;
+  --accent:#ffcf00; --accent-text:#7a5f00; --accent-ink:#101922; --accent-soft:rgba(255,207,0,.22);
+  --photo-edge:#ffffff; --shadow:0 18px 40px rgba(16,25,34,.14);
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--body); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{content:""; position:fixed; inset:0 0 auto; height:env(safe-area-inset-top,0px); z-index:10; background:var(--bg)}
+img{max-width:100%; height:auto; display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display); font-weight:700; line-height:1.08; margin:0; text-wrap:balance; letter-spacing:-.01em}
+p{margin:0}
+.wrap{max-width:1040px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
+
+/* nav */
+.nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:9; background:color-mix(in srgb,var(--bg) 86%,transparent); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex; align-items:center; justify-content:space-between; gap:16px; height:60px}
+.brand{font-family:var(--display); font-weight:800; font-size:17px; text-decoration:none; letter-spacing:-.01em; display:flex; align-items:center; gap:10px; white-space:nowrap}
+.brand i{width:10px; height:10px; background:var(--accent); border-radius:2px; display:inline-block; transform:rotate(45deg)}
+.nav-links{display:flex; gap:18px; list-style:none; margin:0; padding:0}
+.nav-links a{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none; color:var(--fg-2)}
+.nav-links a:hover{color:var(--fg)}
+.btn{display:inline-flex; align-items:center; gap:8px; font-family:var(--display); font-weight:700; font-size:15px; text-decoration:none; padding:10px 16px; border-radius:6px; border:1px solid var(--line-2); color:var(--fg); white-space:nowrap}
+.btn:hover{border-color:var(--fg-3)}
+.btn.primary{background:var(--accent); color:var(--accent-ink); border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.05)}
+@media (max-width:860px){
+  .nav .wrap{height:auto;min-height:60px;flex-wrap:wrap;gap:10px 8px;padding-top:10px;padding-bottom:10px}
+  .brand{font-size:15px;gap:8px;min-width:0}
+  .nav .btn{font-size:13px;padding:7px 10px}
+  .nav-links{order:3;width:100%;gap:0;justify-content:space-between;border-top:1px solid var(--line);padding-top:6px}
+  .nav-links a{display:block;padding:7px 3px;font-size:10px;letter-spacing:.02em}
+  html{scroll-padding-top:125px}
+}
+.cta{display:flex; flex-wrap:wrap; gap:12px; align-items:center}
+.more{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase}
+.more a{color:var(--accent-text); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:4px}
+footer{border-top:1px solid var(--line); padding-block:28px 40px; color:var(--fg-3); font-family:var(--mono); font-size:12px; letter-spacing:.04em}
+footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px}
+footer .note{flex-basis:100%}
+.skip{position:fixed;top:8px;left:16px;z-index:20;transform:translateY(-160%);background:var(--accent);color:var(--accent-ink);padding:10px 16px;font-family:var(--display)}
+.skip:focus{transform:translateY(0)}
+.nav nav{display:contents}
+
+/* The article: a written version of one episode, with the video's own graphics playing beside the text. */
+.post-head{padding-block:44px 30px}
+.post-head .wrap{display:grid; grid-template-columns:minmax(0,1fr) 196px; gap:48px; align-items:end}
+.post-title{min-width:0; display:flex; flex-direction:column; gap:18px}
+.post-title .eyebrow a{text-decoration:none}
+.post-title .eyebrow a:hover{text-decoration:underline}
+.post h1{font-size:clamp(32px,4.6vw,54px); font-weight:800; letter-spacing:-.025em; line-height:1.04; max-width:18ch}
+.dek{font-size:20px; line-height:1.5; color:var(--fg-2); max-width:56ch}
+.byline{font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--fg-3)}
+.watch{min-width:0; display:flex; flex-direction:column; gap:10px}
+.watch-poster{position:relative; display:block; border-radius:10px; overflow:hidden; border:1px solid var(--photo-edge); box-shadow:var(--shadow)}
+.watch-poster img,.watch iframe{width:100%; height:auto; aspect-ratio:9/16; object-fit:cover; display:block; border:0}
+.watch iframe{border-radius:10px; background:#000}
+.watch-play{position:absolute; left:12px; bottom:12px; width:44px; height:44px; border-radius:50%; background:var(--accent)}
+.watch-play::after{content:""; position:absolute; left:17px; top:13px; border-left:14px solid var(--accent-ink); border-top:9px solid transparent; border-bottom:9px solid transparent}
+.watch-note{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--fg-3)}
+.watch-note a{color:var(--accent-text); text-underline-offset:3px}
+
+.post-body{display:flex; flex-direction:column; gap:22px; padding-bottom:60px}
+.post-body > *{width:100%; max-width:720px}
+.post-body h2{font-size:clamp(23px,3vw,30px); letter-spacing:-.02em; line-height:1.15; margin-top:26px}
+.post-body h2 .num{display:block; font-family:var(--mono); font-weight:500; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text); margin-bottom:10px}
+.post-body p{font-size:18px; line-height:1.65}
+.post-body p a{text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px}
+.post-body .pull{font-family:var(--display); font-weight:700; font-size:clamp(21px,2.6vw,26px); line-height:1.22; letter-spacing:-.015em; border-left:3px solid var(--accent); padding:2px 0 2px 18px}
+.post-cta{border-top:1px solid var(--line); margin-top:22px; padding-top:28px; display:flex; flex-direction:column; gap:16px; align-items:flex-start}
+
+/* A scene keeps the video's dark screen in both themes, so its colours read as they do in the video. */
+.scene{margin:6px 0; display:flex; flex-direction:column; gap:10px}
+.scene.tall{max-width:520px}
+.scene .screen{position:relative; border-radius:12px; overflow:hidden; background:#091117; border:1px solid var(--line-2)}
+.scene .screen svg{display:block; width:100%; height:auto}
+.scene .screen svg text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.scene-bar{position:absolute; left:0; right:0; bottom:0; height:3px; background:#ffcf00; transform-origin:0 50%; transform:scaleX(0)}
+.scene-foot{display:flex; align-items:flex-start; gap:12px}
+.scene-btn{flex:none; width:36px; height:36px; display:grid; place-items:center; padding:0; border-radius:6px; border:1px solid var(--line-2); background:transparent; color:var(--fg); cursor:pointer}
+.scene-btn:hover{border-color:var(--fg-3)}
+.scene-btn svg{width:14px; height:14px; fill:currentColor}
+.scene figcaption{font-family:var(--mono); font-size:12px; line-height:1.55; letter-spacing:.03em; color:var(--fg-3); padding-top:8px}
+.scene:not(.is-live) figcaption::before{content:"In the video: "; color:var(--accent-text)}
+
+.more-eps{border-top:1px solid var(--line); padding-block:44px 52px}
+.more-eps .wrap{display:flex; flex-direction:column; gap:22px}
+.more-eps h2{font-size:clamp(24px,3vw,32px); letter-spacing:-.02em}
+.more-eps ul{list-style:none; margin:0; padding:0; display:grid; max-width:720px}
+.more-eps li{border-top:1px solid var(--line)}
+.more-eps li a{display:grid; grid-template-columns:64px minmax(0,1fr); gap:14px; align-items:baseline; padding:14px 0; text-decoration:none}
+.more-eps li .n{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--fg-3)}
+.more-eps li .t{font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-.01em; line-height:1.25}
+.more-eps li a:hover .t{text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:4px}
+
+@media (max-width:860px){
+  .post-head{padding-block:30px 22px}
+  .post-head .wrap{grid-template-columns:1fr; gap:24px}
+  .watch{flex-direction:row; align-items:center; gap:14px}
+  .watch-poster{width:92px; flex:none}
+  .watch-play{left:50%; top:50%; bottom:auto; margin:-18px 0 0 -18px; width:36px; height:36px}
+  .watch-play::after{left:14px; top:10px; border-left-width:11px; border-top-width:8px; border-bottom-width:8px}
+  .post-body p{font-size:17.5px}
+  .scene:not(.tall){margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)) + 6px); width:auto; max-width:none}
+  .scene:not(.tall) .scene-foot{padding-inline:10px}
+}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+<header class="nav"><div class="wrap">
+<a class="brand" href="../../#top"><i aria-hidden="true"></i>Arunkumar Arunagiri</a>
+<nav aria-label="Main navigation"><ul class="nav-links">
+<li><a href="../../#background">Background</a></li><li><a href="../../#work">Work with me</a></li><li><a href="../../#lens">The lens</a></li><li><a href="../../#series">Series</a></li><li><a href="../../#contact">Contact</a></li>
+</ul></nav>
+<a class="btn" href="https://www.linkedin.com/in/arunkumararunagiri" target="_blank" rel="noopener">LinkedIn</a>
+</div></header>
+<main id="top" tabindex="-1">
+<article class="post">
+<header class="post-head"><div class="wrap">
+<div class="post-title">
+<p class="eyebrow"><a href="../../#series">The 1 to N series</a> &middot; Episode 05</p>
+<h1>Why robotaxis need their own depots: power, deadhead and control</h1>
+<p class="dek">Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.</p>
+<p class="byline">By <a href="../../">Arunkumar Arunagiri</a> &middot; <time datetime="2026-11-11">November 11, 2026</time></p>
+</div>
+<div class="watch">
+<a class="watch-poster" href="https://www.youtube.com/watch?v=GFvG8XAWaII" target="_blank" rel="noopener" data-video="GFvG8XAWaII"><img src="../../img/yt-GFvG8XAWaII.jpg" width="405" height="720" alt="Play the video version of this episode"><span class="watch-play" aria-hidden="true"></span></a>
+<p class="watch-note">Prefer to watch? <a href="https://www.youtube.com/watch?v=GFvG8XAWaII" target="_blank" rel="noopener">Open the video on YouTube</a></p>
+</div>
+</div></header>
+<div class="wrap post-body">
+<p>If you look around, every city already has places to charge, clean and fix cars. So why do robotaxi fleets need dedicated depots?</p>
+<p>The short answer is that the infrastructure we see around us was built for cars with drivers. An autonomous vehicle needs more.</p>
+<figure class="scene" data-scene="box:0">
+<figcaption>Places to charge, clean and fix cars are in every city, and each one needs a driver. An autonomous vehicle has no driver on board.</figcaption>
+</figure>
+
+<h2><span class="num">Charging</span>Public chargers are shared with everyone, so a fleet cannot plan around them</h2>
+<p>That starts with chargers that operators can control. Public chargers are shared with everyone: private owners, ride-hailing drivers, corporate fleets. So a fleet cannot plan around them.</p>
+<figure class="scene" data-scene="box:1">
+<figcaption>In a depot, the operator decides who charges, and when. At a public charger, the robotaxi waits behind private owners, ride-hailing drivers and corporate fleets.</figcaption>
+</figure>
+
+<h2><span class="num">In a depot</span>Operators control how much each car charges</h2>
+<p>In a depot, the operators control them, including how much each car charges. Too little and it comes back early, adding empty miles. Too much and it ties up a charger another car needs for the peak time.</p>
+<p>Getting that balance right can matter as much as adding chargers.</p>
+<figure class="scene" data-scene="box:2">
+<figcaption>The charge level is set per car. Too little adds empty miles, too much ties up a charger, and the right amount is ready for the peak.</figcaption>
+</figure>
+
+<h2><span class="num">Building a depot</span>Sites with several megawatts of power are hard to find</h2>
+<p>But building a depot isn&rsquo;t easy. It needs several megawatts of power. Sites like that are hard to find.</p>
+<figure class="scene" data-scene="box:3">
+<figcaption>A depot needs several megawatts of power. Many sites are screened, and one is left.</figcaption>
+</figure>
+
+<h2><span class="num">Far from demand</span>Every trip to and from the depot is deadhead</h2>
+<p>Those sites also tend to sit in industrial pockets, far from the demand hotspots. So every trip to and from the depot is deadhead in terms of battery, time and wear and tear.</p>
+<figure class="scene tall" data-scene="full:0" data-view="62 237 941 1284">
+<figcaption>A citywide service area with the main depot in an industrial pocket. Cars run empty between the pickup areas and the depot, and the empty miles add up. Sources, as shown in the video: OpenStreetMap contributors (ODbL), DataSF, Code for Germany, Electrek, Driverless Rider, Waymo. Service area as of November 2026. Distances are straight-line, so driving distances are longer. The car trips are an illustration.</figcaption>
+</figure>
+
+<h2><span class="num">The car itself</span>A dirty or misaligned sensor changes what the car sees</h2>
+<p>Then there is the car itself. Cameras, lidars, radars. All of these sensors have to be cleaned and checked regularly, because a dirty or misaligned sensor can change what the car perceives.</p>
+<figure class="scene" data-scene="box:4">
+<figcaption>Cameras, lidars and radars each get a check. When one is dirty or misaligned, the car perceives a person away from where they actually are.</figcaption>
+</figure>
+
+<h2><span class="num">No driver on board</span>Across the fleet, cleaning is capacity</h2>
+<p>No driver means no one to catch a spill. One messy rider can take a car off the road mid-shift. So multiply that across the fleet, and cleaning becomes a capacity problem, not a chore.</p>
+<figure class="scene" data-scene="box:5">
+<figcaption>One spill takes one car off the road. Across the fleet, the count of cars on the road keeps dropping.</figcaption>
+</figure>
+
+<h2><span class="num">Data offload</span>Cars upload what they collected on the road</h2>
+<p>Depots also need a high-bandwidth data connection. The cars upload what they collected on the road, so engineers can review incidents and improve the driving software.</p>
+<figure class="scene" data-scene="box:6">
+<figcaption>Data moves from the car to the depot over a high-bandwidth connection, then to engineers who review incidents and improve the software.</figcaption>
+</figure>
+
+<h2><span class="num">One place or three?</span>The routine work happens in one place</h2>
+<p>If a car had to charge in one place, get cleaned in another, get inspected somewhere else, the time spent traveling, waiting and confirming it&rsquo;s ready adds up fast. So the routine work tends to happen in one place: the depot.</p>
+<figure class="scene" data-scene="box:7">
+<figcaption>Charge, clean and inspect in three places means time off the road traveling, waiting and confirming. In one place, the depot, it shrinks to one stop.</figcaption>
+</figure>
+
+<h2><span class="num">Still early</span>Operators want control of how the work gets done</h2>
+<p>On top of that, the technology and business are still early. Operators want to control how the work gets done, so they can change procedures quickly and protect every ride.</p>
+<figure class="scene" data-scene="box:8">
+<figcaption>A procedure moves through new versions quickly. The operator controls it, and that protects every ride.</figcaption>
+</figure>
+
+<h2><span class="num">Why depots exist</span>Almost none of the infrastructure was built for this</h2>
+<p>That&rsquo;s why depots exist. Not because the infrastructure isn&rsquo;t out there, but because almost none of it was built for this.</p>
+<figure class="scene" data-scene="box:9">
+<figcaption>Charge, clean and fix each get a check for being out there, and a cross for being built for robotaxis.</figcaption>
+</figure>
+
+<h2><span class="num">The real question</span>It&rsquo;s how many, where, and what each one does</h2>
+<p>So the question is not whether fleets need depots. It&rsquo;s how many, where and what each one does.</p>
+<figure class="scene" data-scene="box:10">
+<figcaption>Three questions about depots: how many, where, and what each one does.</figcaption>
+</figure>
+<p>Every site trades power and land against deadhead and peak readiness.</p>
+<figure class="scene" data-scene="box:11">
+<figcaption>A balance with power and land on one side, deadhead and peak readiness on the other.</figcaption>
+</figure>
+
+<p class="pull">The fleet that gets that math right won&rsquo;t just have more cars. They will have more cars on the road when the riders need them.</p>
+
+<div class="post-cta">
+<p>If you are deciding how many depots your fleet needs, where, and what each one does, reach out.</p>
+<a class="btn primary" href="mailto:contact@tarsai.co">Email contact@tarsai.co</a>
+</div>
+</div>
+</article>
+<section class="more-eps" aria-labelledby="more-h"><div class="wrap">
+<h2 id="more-h">More from the series</h2>
+<ul>
+<li><a href="../robotaxi-plan-six-calls/"><span class="n">EP 06</span><span class="t">Your board wants a robotaxi plan. Start with these six calls</span></a></li>
+<li><a href="https://www.youtube.com/watch?v=YYi2Dky8X2g" target="_blank" rel="noopener"><span class="n">EP 04</span><span class="t">Would you let AI run the robotaxi depot?</span></a></li>
+<li><a href="https://www.youtube.com/watch?v=1YUuHlvwKU0" target="_blank" rel="noopener"><span class="n">EP 03</span><span class="t">Which robotaxi do you charge first?</span></a></li>
+<li><a href="https://www.youtube.com/watch?v=ic6VA8gJRpY" target="_blank" rel="noopener"><span class="n">EP 02</span><span class="t">The hidden workforce behind robotaxis</span></a></li>
+<li><a href="https://www.youtube.com/watch?v=g5eesldPLqQ" target="_blank" rel="noopener"><span class="n">EP 01</span><span class="t">Why I'm building TARS AI</span></a></li>
+</ul>
+<p class="more"><a href="../../#series">All episodes</a></p>
+</div></section>
+</main>
+<footer><div class="wrap"><span>&copy; <span id="year">2026</span> Arunkumar Arunagiri &middot; Scaling autonomous fleet operations</span><span>San Francisco Bay Area</span><span class="note">This site counts visits with <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Google Analytics</a>.</span></div></footer>
+<script>
+/* Keeps the footer year current. 2026 stays as the fallback when scripts are off. */
+(function(){var y=document.getElementById('year');if(y)y.textContent=Math.max(2026,new Date().getFullYear());})();
+/* The poster plays the video in place on wide screens. On a phone it is a plain link to YouTube, which plays
+   upright video better. Nothing from YouTube loads until the visitor asks for the video. */
+(function(){
+  var a=document.querySelector('.watch-poster'); if(!a) return;
+  a.addEventListener('click',function(e){
+    if(a.offsetWidth<160||e.metaKey||e.ctrlKey||e.shiftKey) return;
+    e.preventDefault();
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-video')+'?autoplay=1&rel=0&playsinline=1';
+    f.title='Video version of this episode';
+    f.allow='autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen=true;
+    a.parentNode.replaceChild(f,a);
+  });
+})();
+</script>
+<script src="scenes.js"></script>
+<script src="../player.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://arunkumara.com/series/why-robotaxis-need-their-own-depots/#article",
+      "headline": "Why robotaxis need their own depots: power, deadhead and control",
+      "description": "Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.",
+      "url": "https://arunkumara.com/series/why-robotaxis-need-their-own-depots/",
+      "mainEntityOfPage": "https://arunkumara.com/series/why-robotaxis-need-their-own-depots/",
+      "datePublished": "2026-11-11T00:36:22+00:00",
+      "image": "https://i.ytimg.com/vi/GFvG8XAWaII/maxresdefault.jpg",
+      "author": {
+        "@type": "Person",
+        "@id": "https://arunkumara.com/#arun",
+        "name": "Arunkumar Arunagiri",
+        "url": "https://arunkumara.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://arunkumara.com/#arun",
+        "name": "Arunkumar Arunagiri",
+        "url": "https://arunkumara.com/"
+      },
+      "isPartOf": {
+        "@type": "CreativeWorkSeries",
+        "name": "The 1 to N series",
+        "url": "https://arunkumara.com/#series"
+      },
+      "video": {
+        "@id": "https://arunkumara.com/series/why-robotaxis-need-their-own-depots/#video"
+      }
+    },
+    {
+      "@type": "VideoObject",
+      "@id": "https://arunkumara.com/series/why-robotaxis-need-their-own-depots/#video",
+      "name": "Why robotaxis need their own depots: power, deadhead and control",
+      "description": "Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.",
+      "thumbnailUrl": "https://i.ytimg.com/vi/GFvG8XAWaII/maxresdefault.jpg",
+      "uploadDate": "2026-11-11T00:36:22+00:00",
+      "url": "https://www.youtube.com/watch?v=GFvG8XAWaII",
+      "embedUrl": "https://www.youtube.com/embed/GFvG8XAWaII"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Arunkumar Arunagiri",
+          "item": "https://arunkumara.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "The 1 to N series",
+          "item": "https://arunkumara.com/#series"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Why robotaxis need their own depots: power, deadhead and control"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</body></html>

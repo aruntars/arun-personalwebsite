@@ -2,6 +2,9 @@
 
     python3 src/build.py                 writes index.html at the repository root
     python3 src/build.py --artifact OUT  also writes OUT, the same page without its document shell
+    python3 src/build.py --root DIR      writes everything under DIR instead, for a preview that leaves the
+                                         repository's built files alone
+    python3 src/build.py --only SLUG     builds that one article only, even if it is not in sitemap.xml yet
 
 The page is src/page.html. The diagram in the TARS AI section is assembled from ops.html (markup),
 ops.css (styles) and ops.js (script), which replace the <figure class="lens-visual"> placeholder.
@@ -18,6 +21,9 @@ from pathlib import Path
 
 here = Path(__file__).resolve().parent
 root = here.parent
+out_root = Path(sys.argv[sys.argv.index("--root") + 1]) if "--root" in sys.argv else root
+only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+out_root.mkdir(parents=True, exist_ok=True)
 src = (here / "page.html").read_text(encoding="utf-8")
 raw = src   # the page as written, before the series is filled in; the article pages borrow from it
 css = (here / "ops.css").read_text(encoding="utf-8")
@@ -38,7 +44,7 @@ SITE = "https://arunkumara.com/"
 def has_article(v):
     """A video has a written page when it names a slug and src/series/<slug>/article.html exists."""
     slug = v.get("slug")
-    if not slug:
+    if not slug or (only and slug != only):
         return False
     assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug), "slug must be lower-case words joined by hyphens"
     return (here / "series" / slug / "article.html").exists()
@@ -121,7 +127,7 @@ def ascii_safe(doc):
 
 out = ascii_safe(out)
 assert out.isascii()
-(root / "index.html").write_text(out, encoding="utf-8")
+(out_root / "index.html").write_text(out, encoding="utf-8")
 print("index.html", len(out), "bytes")
 
 # ---- Articles: one written page per episode that has src/series/<slug>/article.html ----
@@ -147,14 +153,14 @@ if articles:
         assert not left, "unfilled template fields: %s" % left
         return text
 
-    (root / "series").mkdir(exist_ok=True)
+    (out_root / "series").mkdir(exist_ok=True)
     player = (here / "series" / "player.js").read_text(encoding="utf-8")
     assert player.isascii()
-    (root / "series" / "player.js").write_text(player, encoding="utf-8")
+    (out_root / "series" / "player.js").write_text(player, encoding="utf-8")
     for v in articles:
         slug, vid = v["slug"], v["id"]
         url = SITE + "series/%s/" % slug
-        assert "<loc>%s</loc>" % url in sitemap, "add %s to sitemap.xml" % url
+        assert only or "<loc>%s</loc>" % url in sitemap, "add %s to sitemap.xml" % url
         body = (here / "series" / slug / "article.html").read_text(encoding="utf-8")
         dek = re.match(r'\s*<p class="dek">(.*?)</p>', body, re.S)
         assert dek, "%s: article.html must start with <p class=\"dek\">" % slug
@@ -193,8 +199,14 @@ if articles:
         })
         html_page = ascii_safe(html_page)
         assert html_page.isascii()
-        dest = root / "series" / slug
+        dest = out_root / "series" / slug
         dest.mkdir(exist_ok=True)
+        # Pictures a scene draws, if any, sit beside the article and are copied as they are.
+        for extra in sorted((here / "series" / slug).rglob("*")):
+            rel = extra.relative_to(here / "series" / slug)
+            if extra.is_file() and rel.as_posix() not in ("article.html", "scenes.js") and not extra.name.startswith("."):
+                (dest / rel).parent.mkdir(parents=True, exist_ok=True)
+                (dest / rel).write_bytes(extra.read_bytes())
         (dest / "index.html").write_text(html_page, encoding="utf-8")
         # The episode's graphics: the scene code as drawn for the video, wrapped so that only the
         # timelines and the background colour reach the page.
