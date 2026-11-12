@@ -62,8 +62,10 @@ def fetch(url, limit, tries=3, retry_missing=False):
 
 
 def blurb_from(description, limit=170):
-    """The first sentence or two of a video description, without links or the hashtag line."""
+    """The first sentence or two of a video description, without links, lists or the hashtag line."""
     text = re.split(r"(?m)^\s*#|\s#\w", description, maxsplit=1)[0]
+    # A numbered or bulleted list ends the opening paragraph, so "1." never ends up as a sentence.
+    text = re.split(r"(?m)^\s*(?:\d+[.)]|[-*\u2022])\s", text, maxsplit=1)[0]
     text = re.sub(r"https?://\S+", "", text)
     text = re.sub(r"\s+", " ", text).strip()
     out = ""
