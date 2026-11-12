@@ -119,7 +119,12 @@ if "--artifact" in sys.argv:
     # The artifact has its own icon and its own address, so the favicon and canonical links stay out of it.
     links = "\n".join(l for l in re.findall(r"<link [^>]*>", head) if not re.search(r'rel="(?:(?:apple-touch-)?icon|canonical)"', l))
     style = head[head.index("<style>"):head.index("</style>") + len("</style>")]
+    # The Google tag is in the head, which the artifact does not carry, so its footer note goes too.
+    body = out[body_open + len("<body>"):body_close].strip()
+    note = re.compile(r'<span class="note">.*?</span>', re.S)
+    assert len(note.findall(body)) == 1, "expected exactly one analytics note"
+    body = note.sub("", body)
     frag = "\n".join(['<meta charset="utf-8">', "<title>Arunkumar Arunagiri</title>", '<meta name="claude:viewport-fit-sides" content="cover">',
-                      desc, links, style, out[body_open + len("<body>"):body_close].strip(), ""])
+                      desc, links, style, body, ""])
     target.write_text(frag, encoding="utf-8")
     print(target, len(frag), "bytes")
