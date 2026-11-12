@@ -1,0 +1,59 @@
+<p class="dek">When three chargers die an hour before the evening rush, the real question is which robotaxi gets back to riders soonest, not which battery is lowest.</p>
+
+<p>Three chargers just died in your depot. The evening rush starts in an hour. Which robotaxi do you charge first?</p>
+<figure class="scene" data-scene="box:0">
+<figcaption>The depot&rsquo;s chargers, three of them down, and a clock counting down to the rush. Then a row of cars with different battery levels: who gets a plug first?</figcaption>
+</figure>
+<p>Cars keep pulling in. A technician is on the fault, but there aren&rsquo;t enough working chargers for every car.</p>
+<figure class="scene" data-scene="box:1">
+<figcaption>Cars keep joining the queue while a technician works on the fault. Every working plug is busy, and the count of cars waiting keeps rising.</figcaption>
+</figure>
+
+<h2><span class="num">The default rule</span>Lowest battery first can add zero rides</h2>
+<p>The default rule is usually lower state of charge first. But what if one of those cars also needs a repair? It&rsquo;s not going back out tonight anyway. Charging it now doesn&rsquo;t add a single ride.</p>
+<figure class="scene" data-scene="box:2" data-to="25.16">
+<figcaption>Four cars are ranked lowest battery first. The car ranked first also needs a repair and stays parked tonight, so charging it now adds zero rides.</figcaption>
+</figure>
+<p>Meanwhile, another car just needs a quick top-up to cover the rush. Why not get that one charged first?</p>
+<figure class="scene" data-scene="box:2" data-from="25.16">
+<figcaption>Another car needs only 15% more to be rush-ready. It moves to first place, and the car that needs a repair drops out of the ranking.</figcaption>
+</figure>
+
+<h2><span class="num">Right-size the charge</span>Charge for the rush, not for full</h2>
+<p>And not every car needs its usual charge target. Give each car what the rush needs, not a full state of charge, and the same chargers can serve more cars.</p>
+<figure class="scene" data-scene="box:3" data-view="0 0 1016 300">
+<figcaption>Below the usual target sits the rush need: enough for tonight, and the rest can wait. One charger then fits more cars in the same stretch of time.</figcaption>
+</figure>
+
+<h2><span class="num">Charge at another site?</span>Maybe. Three things decide it</h2>
+<p>What about sending cars to charge somewhere else? Maybe, but how far is it? Will a charger actually be free when you get there? And will they be back before the rush is over?</p>
+<figure class="scene" data-scene="box:4">
+<figcaption>A car leaves your depot for another site. Three questions light up in turn: how far is it, is a charger free, and is it back in time?</figcaption>
+</figure>
+
+<h2><span class="num">The real question</span>Which car is back with riders soonest?</h2>
+<p>So the real question is: which car gets back to riders soonest?</p>
+<figure class="scene" data-scene="box:5">
+<figcaption>Three cars head toward riders at different speeds. One gets there ahead of the others and is marked first back.</figcaption>
+</figure>
+<p>That means weighing state of charge, work each car still needs, chargers at other sites, travel time, and where demand will peak in the next hour. All at once, while the rush is building.</p>
+<figure class="scene" data-scene="box:6">
+<figcaption>Five inputs appear one by one, from state of charge to demand in the next hour. All five feed one decision, while the rush builds.</figcaption>
+</figure>
+
+<h2><span class="num">The human limit</span>Your best supervisor juggles all five, but only on their shift</h2>
+<p>Your best supervisor already thinks this way. The problem is that they cannot be there in every shift.</p>
+<figure class="scene" data-scene="box:7">
+<figcaption>A supervisor keeps all five inputs in the air. Of the day, evening and night shifts, only the day is covered.</figcaption>
+</figure>
+
+<h2><span class="num">Where an AI agent helps</span>An AI agent can re-weigh all five inputs every hour</h2>
+<p>That&rsquo;s where an AI agent can help. Weighing it all at once, every hour, so you still have cars at the peak when something breaks.</p>
+<figure class="scene" data-scene="box:8" data-view="0 0 1016 300">
+<figcaption>An AI agent keeps the five inputs moving and re-weighs them hour by hour along a demand curve. A fault appears, and the cars-ready line still clears the peak.</figcaption>
+</figure>
+
+<div class="post-cta">
+<p>Next: what it would take to trust an AI agent with that. <a href="../would-you-let-ai-run-the-robotaxi-depot/">Read episode 4</a>.</p>
+<a class="btn primary" href="mailto:contact@tarsai.co">Email contact@tarsai.co</a>
+</div>

@@ -94,6 +94,10 @@ Google tag from `src/page.html`, so those change in one place. `src/series/playe
 plays while it is on screen, holds on the finished picture and starts again, and has a pause button. Visitors
 who ask their device for less motion see the finished picture and can play it once.
 
+Two episodes differ from that recipe. Episode 2 was edited without coded graphics, so its `scenes.js` was written
+for the page: it redraws the video's still cards with the same helpers and animates them. Episode 3 uses an older
+overlay whose list is called `SCENES`; its `scenes.js` ends with `const BOX = SCENES;`.
+
 ## Analytics
 
 The Google tag near the top of the head of `src/page.html` sends visits to Google Analytics. Its ID,
