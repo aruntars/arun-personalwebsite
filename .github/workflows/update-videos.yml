@@ -1,12 +1,13 @@
 name: Update videos
 
-# Twice a day, read the YouTube channel feed. If there is a new video, add it to src/videos.json,
+# Every hour, read the YouTube channel feed. If there is a new video, add it to src/videos.json,
 # rebuild index.html and commit both to main, which publishes the site. YouTube's feed is sometimes
 # unavailable for hours, so a run that cannot read it changes nothing and the next run tries again.
+# The minute is off the hour on purpose: GitHub starts scheduled runs late when many are due at once.
 
 on:
   schedule:
-    - cron: "23 3,15 * * *"
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
