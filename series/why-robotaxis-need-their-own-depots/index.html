@@ -4,7 +4,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Google tag, which counts visits with Google Analytics. The consent lines must run before the tag loads.
      Advertising signals are off for everyone. Visitors in the EU, the wider EEA, the UK and Switzerland are
-     counted without cookies. Everyone else is counted with Google Analytics cookies. -->
+     counted without cookies. Everyone else is counted with Google Analytics cookies.
+     The tag loads only on arunkumara.com, so a preview on a computer or a copy served elsewhere is not counted. -->
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -12,8 +13,11 @@ gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_per
 gtag('consent', 'default', {ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
   region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE','IS','LI','NO','GB','CH']});
 gtag('js', new Date());
+if (/^(www\.)?arunkumara\.com$/.test(location.hostname)) {
+  document.head.appendChild(Object.assign(document.createElement('script'),
+    {async: true, src: 'https://www.googletagmanager.com/gtm.js?id=GTM-WFB22P62'}));
+}
 </script>
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WFB22P62"></script>
 <title>Why robotaxis need their own depots: power, deadhead and control | Arunkumar Arunagiri</title>
 <meta name="description" content="Every city already has places to charge, clean and fix cars, but almost none of it was built for robotaxis, so fleets need dedicated depots.">
 <link rel="canonical" href="https://arunkumara.com/series/why-robotaxis-need-their-own-depots/">
