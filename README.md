@@ -106,6 +106,10 @@ line that loads the tag. They switch advertising signals off for everyone and co
 wider EEA, the UK and Switzerland without cookies. The footer carries a one-line note with Google's link
 about how it uses the data. To stop counting, delete the tag block and the note, then rebuild.
 
+The tag loads only when the page is served from `arunkumara.com` or `www.arunkumara.com`. A preview on a
+computer, a file opened from disk, or a copy on another address sends nothing, so test visits stay out of the
+numbers. If the site ever moves to another address, change the hostname check in the tag block.
+
 ## Videos
 
 The series section shows every video from the YouTube channel in one strip that scrolls sideways, newest
