@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+%%GTAG%%
+<title>%%TITLE%% | Arunkumar Arunagiri</title>
+<meta name="description" content="%%DESC%%">
+<link rel="canonical" href="%%URL%%">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Arunkumar Arunagiri">
+<meta property="og:title" content="%%TITLE%%">
+<meta property="og:description" content="%%DESC%%">
+<meta property="og:url" content="%%URL%%">
+<meta property="og:image" content="%%OG_IMAGE%%">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../../favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="../../img/icon-192.png">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+%%FONTS%%
+<style>
+/* Shared with the home page: colours, base type, navigation, buttons and footer. src/build.py copies these
+   rules from src/page.html, so change them there. */
+%%SHARED_CSS%%
+
+/* The article: a written version of one episode, with the video's own graphics playing beside the text. */
+.post-head{padding-block:44px 30px}
+.post-head .wrap{display:grid; grid-template-columns:minmax(0,1fr) 196px; gap:48px; align-items:end}
+.post-title{min-width:0; display:flex; flex-direction:column; gap:18px}
+.post-title .eyebrow a{text-decoration:none}
+.post-title .eyebrow a:hover{text-decoration:underline}
+.post h1{font-size:clamp(32px,4.6vw,54px); font-weight:800; letter-spacing:-.025em; line-height:1.04; max-width:18ch}
+.dek{font-size:20px; line-height:1.5; color:var(--fg-2); max-width:56ch}
+.byline{font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:var(--fg-3)}
+.watch{min-width:0; display:flex; flex-direction:column; gap:10px}
+.watch-poster{position:relative; display:block; border-radius:10px; overflow:hidden; border:1px solid var(--photo-edge); box-shadow:var(--shadow)}
+.watch-poster img,.watch iframe{width:100%; height:auto; aspect-ratio:9/16; object-fit:cover; display:block; border:0}
+.watch iframe{border-radius:10px; background:#000}
+.watch-play{position:absolute; left:12px; bottom:12px; width:44px; height:44px; border-radius:50%; background:var(--accent)}
+.watch-play::after{content:""; position:absolute; left:17px; top:13px; border-left:14px solid var(--accent-ink); border-top:9px solid transparent; border-bottom:9px solid transparent}
+.watch-note{font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--fg-3)}
+.watch-note a{color:var(--accent-text); text-underline-offset:3px}
+
+.post-body{display:flex; flex-direction:column; gap:22px; padding-bottom:60px}
+.post-body > *{width:100%; max-width:720px}
+.post-body h2{font-size:clamp(23px,3vw,30px); letter-spacing:-.02em; line-height:1.15; margin-top:26px}
+.post-body h2 .num{display:block; font-family:var(--mono); font-weight:500; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-text); margin-bottom:10px}
+.post-body p{font-size:18px; line-height:1.65}
+.post-body p a{text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:3px}
+.post-body .pull{font-family:var(--display); font-weight:700; font-size:clamp(21px,2.6vw,26px); line-height:1.22; letter-spacing:-.015em; border-left:3px solid var(--accent); padding:2px 0 2px 18px}
+.post-cta{border-top:1px solid var(--line); margin-top:22px; padding-top:28px; display:flex; flex-direction:column; gap:16px; align-items:flex-start}
+
+/* A scene keeps the video's dark screen in both themes, so its colours read as they do in the video. */
+.scene{margin:6px 0; display:flex; flex-direction:column; gap:10px}
+.scene.tall{max-width:520px}
+.scene .screen{position:relative; border-radius:12px; overflow:hidden; background:#091117; border:1px solid var(--line-2)}
+.scene .screen svg{display:block; width:100%; height:auto}
+.scene .screen svg text{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
+.scene-bar{position:absolute; left:0; right:0; bottom:0; height:3px; background:#ffcf00; transform-origin:0 50%; transform:scaleX(0)}
+.scene-foot{display:flex; align-items:flex-start; gap:12px}
+.scene-btn{flex:none; width:36px; height:36px; display:grid; place-items:center; padding:0; border-radius:6px; border:1px solid var(--line-2); background:transparent; color:var(--fg); cursor:pointer}
+.scene-btn:hover{border-color:var(--fg-3)}
+.scene-btn svg{width:14px; height:14px; fill:currentColor}
+.scene figcaption{font-family:var(--mono); font-size:12px; line-height:1.55; letter-spacing:.03em; color:var(--fg-3); padding-top:8px}
+.scene:not(.is-live) figcaption::before{content:"In the video: "; color:var(--accent-text)}
+
+.more-eps{border-top:1px solid var(--line); padding-block:44px 52px}
+.more-eps .wrap{display:flex; flex-direction:column; gap:22px}
+.more-eps h2{font-size:clamp(24px,3vw,32px); letter-spacing:-.02em}
+.more-eps ul{list-style:none; margin:0; padding:0; display:grid; max-width:720px}
+.more-eps li{border-top:1px solid var(--line)}
+.more-eps li a{display:grid; grid-template-columns:64px minmax(0,1fr); gap:14px; align-items:baseline; padding:14px 0; text-decoration:none}
+.more-eps li .n{font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; color:var(--fg-3)}
+.more-eps li .t{font-family:var(--display); font-weight:700; font-size:18px; letter-spacing:-.01em; line-height:1.25}
+.more-eps li a:hover .t{text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:4px}
+
+@media (max-width:860px){
+  .post-head{padding-block:30px 22px}
+  .post-head .wrap{grid-template-columns:1fr; gap:24px}
+  .watch{flex-direction:row; align-items:center; gap:14px}
+  .watch-poster{width:92px; flex:none}
+  .watch-play{left:50%; top:50%; bottom:auto; margin:-18px 0 0 -18px; width:36px; height:36px}
+  .watch-play::after{left:14px; top:10px; border-left-width:11px; border-top-width:8px; border-bottom-width:8px}
+  .post-body p{font-size:17.5px}
+  .scene:not(.tall){margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)) + 6px); width:auto; max-width:none}
+  .scene:not(.tall) .scene-foot{padding-inline:10px}
+}
+</style>
+</head><body>
+<a class="skip" href="#top">Skip to content</a>
+%%NAV%%
+<main id="top" tabindex="-1">
+<article class="post">
+<header class="post-head"><div class="wrap">
+<div class="post-title">
+<p class="eyebrow"><a href="../../#series">The 1 to N series</a> &middot; Episode %%EP%%</p>
+<h1>%%H1%%</h1>
+<p class="dek">%%DEK%%</p>
+<p class="byline">By <a href="../../">Arunkumar Arunagiri</a> &middot; <time datetime="%%DATE_ISO%%">%%DATE_TEXT%%</time></p>
+</div>
+<div class="watch">
+<a class="watch-poster" href="%%WATCH%%" target="_blank" rel="noopener" data-video="%%VIDEO_ID%%"><img src="../../%%THUMB%%" width="405" height="720" alt="Play the video version of this episode"><span class="watch-play" aria-hidden="true"></span></a>
+<p class="watch-note">Prefer to watch? <a href="%%WATCH%%" target="_blank" rel="noopener">Open the video on YouTube</a></p>
+</div>
+</div></header>
+<div class="wrap post-body">
+%%ARTICLE%%
+</div>
+</article>
+<section class="more-eps" aria-labelledby="more-h"><div class="wrap">
+<h2 id="more-h">More from the series</h2>
+<ul>
+%%MORE%%
+</ul>
+<p class="more"><a href="../../#series">All episodes</a></p>
+</div></section>
+</main>
+%%FOOTER%%
+<script>
+/* Keeps the footer year current. 2026 stays as the fallback when scripts are off. */
+(function(){var y=document.getElementById('year');if(y)y.textContent=Math.max(2026,new Date().getFullYear());})();
+/* The poster plays the video in place on wide screens. On a phone it is a plain link to YouTube, which plays
+   upright video better. Nothing from YouTube loads until the visitor asks for the video. */
+(function(){
+  var a=document.querySelector('.watch-poster'); if(!a) return;
+  a.addEventListener('click',function(e){
+    if(a.offsetWidth<160||e.metaKey||e.ctrlKey||e.shiftKey) return;
+    e.preventDefault();
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+a.getAttribute('data-video')+'?autoplay=1&rel=0&playsinline=1';
+    f.title='Video version of this episode';
+    f.allow='autoplay; encrypted-media; picture-in-picture'; f.allowFullscreen=true;
+    a.parentNode.replaceChild(f,a);
+  });
+})();
+</script>
+<script src="scenes.js"></script>
+<script src="../player.js"></script>
+<script type="application/ld+json">
+%%JSONLD%%
+</script>
+</body></html>

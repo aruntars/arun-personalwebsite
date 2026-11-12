@@ -42,7 +42,7 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/videos.json index.html img
+          git add src/videos.json index.html img series
           git commit -m "Update the series with the latest videos"
           git push
           gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" > /dev/null \

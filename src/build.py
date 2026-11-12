@@ -6,7 +6,9 @@
 The page is src/page.html. The diagram in the TARS AI section is assembled from ops.html (markup),
 ops.css (styles) and ops.js (script), which replace the <figure class="lens-visual"> placeholder.
 The series cards and the video data for search engines are generated from src/videos.json.
-Edit those files, never index.html, then run this script.
+A video with a "slug" and a folder src/series/<slug>/ also gets a written page at series/<slug>/, built from
+src/series/template.html. See "Articles" in README.md.
+Edit those files, never index.html or anything under series/, then run this script.
 """
 import json
 import re
@@ -17,6 +19,7 @@ from pathlib import Path
 here = Path(__file__).resolve().parent
 root = here.parent
 src = (here / "page.html").read_text(encoding="utf-8")
+raw = src   # the page as written, before the series is filled in; the article pages borrow from it
 css = (here / "ops.css").read_text(encoding="utf-8")
 html = (here / "ops.html").read_text(encoding="utf-8").strip()
 js = (here / "ops.js").read_text(encoding="utf-8").strip()
@@ -29,6 +32,18 @@ shown.sort(key=lambda v: not v.get("pin"))
 limit = int(ledger.get("show", 0))
 if limit > 0:
     shown = shown[:limit]
+SITE = "https://arunkumara.com/"
+
+
+def has_article(v):
+    """A video has a written page when it names a slug and src/series/<slug>/article.html exists."""
+    slug = v.get("slug")
+    if not slug:
+        return False
+    assert re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug), "slug must be lower-case words joined by hyphens"
+    return (here / "series" / slug / "article.html").exists()
+
+
 cards, nodes = [], []
 for v in shown:
     assert re.fullmatch(r"[A-Za-z0-9_-]{11}", v["id"]), "unexpected video id"
@@ -37,14 +52,14 @@ for v in shown:
     watch = "https://www.youtube.com/watch?v=" + v["id"]
     lines = [
         "<li>",
-        '<a class="ep" href="%s" target="_blank" rel="noopener">' % watch,
+        '<a class="ep" href="series/%s/">' % v["slug"] if has_article(v) else '<a class="ep" href="%s" target="_blank" rel="noopener">' % watch,
         '<img src="%s" width="405" height="720" loading="lazy" alt="Episode %d title card: %s">' % (escape(v["thumb"]), v["episode"], escape(title)),
         '<span class="n">EP %02d%s</span>' % (v["episode"], " \u00b7 <b>Start here</b>" if v.get("pin") else ""),
         '<span class="t">%s</span>' % escape(title, quote=False),
     ]
     if blurb:
         lines.append('<span class="d">%s</span>' % escape(blurb, quote=False))
-    lines += ['<span class="w">Watch on YouTube</span>', "</a>", "</li>"]
+    lines += ['<span class="w">%s</span>' % ("Read and watch" if has_article(v) else "Watch on YouTube"), "</a>", "</li>"]
     cards.append("\n".join(lines))
     node = {
         "@type": "VideoObject",
@@ -109,6 +124,87 @@ assert out.isascii()
 (root / "index.html").write_text(out, encoding="utf-8")
 print("index.html", len(out), "bytes")
 
+# ---- Articles: one written page per episode that has src/series/<slug>/article.html ----
+articles = [v for v in shown if has_article(v)]
+if articles:
+    template = (here / "series" / "template.html").read_text(encoding="utf-8")
+    style = raw[raw.index("<style>") + len("<style>"):raw.index("</style>")]
+    shared = style[style.index(":root{"):style.index("/* hero")].rstrip()
+    shared += "\n" + "\n".join(l for l in style.splitlines() if l.startswith(("footer", ".skip", ".more", ".cta{", ".nav nav")))
+    gtag = raw[raw.index("<!-- Google tag"):raw.index("</script>", raw.index("googletagmanager.com/gtm.js")) + len("</script>")]
+    fonts = re.search(r'<link rel="stylesheet" href="https://fonts\.googleapis\.com[^>]*>', raw).group(0)
+    nav = re.search(r'<header class="nav">.*?</header>', raw, re.S).group(0).replace('href="#', 'href="../../#')
+    footer = re.search(r"<footer>.*?</footer>", raw, re.S).group(0)
+    sitemap = (root / "sitemap.xml").read_text(encoding="utf-8")
+    newest = sorted(shown, key=lambda v: v["published"], reverse=True)
+    months = "January February March April May June July August September October November December".split()
+
+    def fill(text, values):
+        for key, value in values.items():
+            assert "%%" + key + "%%" in text, "template has no " + key
+            text = text.replace("%%" + key + "%%", value)
+        left = re.findall(r"%%[A-Z_]+%%", text)
+        assert not left, "unfilled template fields: %s" % left
+        return text
+
+    (root / "series").mkdir(exist_ok=True)
+    player = (here / "series" / "player.js").read_text(encoding="utf-8")
+    assert player.isascii()
+    (root / "series" / "player.js").write_text(player, encoding="utf-8")
+    for v in articles:
+        slug, vid = v["slug"], v["id"]
+        url = SITE + "series/%s/" % slug
+        assert "<loc>%s</loc>" % url in sitemap, "add %s to sitemap.xml" % url
+        body = (here / "series" / slug / "article.html").read_text(encoding="utf-8")
+        dek = re.match(r'\s*<p class="dek">(.*?)</p>', body, re.S)
+        assert dek, "%s: article.html must start with <p class=\"dek\">" % slug
+        body = body[dek.end():].strip()
+        desc = re.sub(r"<[^>]+>", "", dek.group(1)).strip()
+        title = v.get("article_title") or v["title"]
+        watch = "https://www.youtube.com/watch?v=" + vid
+        image = "https://i.ytimg.com/vi/%s/maxresdefault.jpg" % vid
+        y, m, d = (int(x) for x in v["published"][:10].split("-"))
+        more = []
+        for o in newest:
+            if o is v:
+                continue
+            link = '<a href="../%s/">' % o["slug"] if has_article(o) else '<a href="https://www.youtube.com/watch?v=%s" target="_blank" rel="noopener">' % o["id"]
+            more.append('<li>%s<span class="n">EP %02d</span><span class="t">%s</span></a></li>' % (link, o["episode"], escape(o.get("display_title") or o["title"], quote=False)))
+        author = {"@type": "Person", "@id": SITE + "#arun", "name": "Arunkumar Arunagiri", "url": SITE}
+        graph = {"@context": "https://schema.org", "@graph": [
+            {"@type": "Article", "@id": url + "#article", "headline": title, "description": desc, "url": url, "mainEntityOfPage": url,
+             "datePublished": v["published"], "image": image, "author": author, "publisher": author,
+             "isPartOf": {"@type": "CreativeWorkSeries", "name": "The 1 to N series", "url": SITE + "#series"}, "video": {"@id": url + "#video"}},
+            {"@type": "VideoObject", "@id": url + "#video", "name": v["title"], "description": desc, "thumbnailUrl": image,
+             "uploadDate": v["published"], "url": watch, "embedUrl": "https://www.youtube.com/embed/" + vid},
+            {"@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Arunkumar Arunagiri", "item": SITE},
+                {"@type": "ListItem", "position": 2, "name": "The 1 to N series", "item": SITE + "#series"},
+                {"@type": "ListItem", "position": 3, "name": title}]},
+        ]}
+        html_page = fill(template, {
+            "GTAG": gtag, "FONTS": fonts, "SHARED_CSS": shared, "NAV": nav, "FOOTER": footer,
+            "TITLE": escape(title), "DESC": escape(desc), "URL": url, "OG_IMAGE": image,
+            "EP": "%02d" % v["episode"], "H1": escape(title, quote=False), "DEK": dek.group(1).strip(),
+            "DATE_ISO": v["published"][:10], "DATE_TEXT": "%s %d, %d" % (months[m - 1], d, y),
+            "WATCH": watch, "VIDEO_ID": vid, "THUMB": escape(v["thumb"]),
+            "ARTICLE": body, "MORE": "\n".join(more),
+            "JSONLD": json.dumps(graph, indent=2, ensure_ascii=False).replace("</", "<\\/"),
+        })
+        html_page = ascii_safe(html_page)
+        assert html_page.isascii()
+        dest = root / "series" / slug
+        dest.mkdir(exist_ok=True)
+        (dest / "index.html").write_text(html_page, encoding="utf-8")
+        # The episode's graphics: the scene code as drawn for the video, wrapped so that only the
+        # timelines and the background colour reach the page.
+        scenes = (here / "series" / slug / "scenes.js").read_text(encoding="utf-8")
+        scenes = ("(function(){\n" + scenes.rstrip() + "\nwindow.SERIES_SCENES = {BOX: typeof BOX === 'undefined' ? [] : BOX, "
+                  "FULL: typeof FULL === 'undefined' ? [] : FULL, BG: BG};\n})();\n")
+        scenes = re.sub(r"[^\x00-\x7f]", lambda mm: "".join("\\u%04x" % u for u in _utf16(mm.group(0))), scenes)
+        (dest / "scenes.js").write_text(scenes, encoding="utf-8")
+        print("series/%s/index.html" % slug, len(html_page), "bytes, scenes.js", len(scenes), "bytes")
+
 if "--artifact" in sys.argv:
     target = Path(sys.argv[sys.argv.index("--artifact") + 1])
     head_end = out.index("</head>")
@@ -124,6 +220,8 @@ if "--artifact" in sys.argv:
     note = re.compile(r'<span class="note">.*?</span>', re.S)
     assert len(note.findall(body)) == 1, "expected exactly one analytics note"
     body = note.sub("", body)
+    # The artifact is the home page alone, so links to the written episodes point at the live site.
+    body = body.replace('href="series/', 'href="%sseries/' % SITE)
     frag = "\n".join(['<meta charset="utf-8">', "<title>Arunkumar Arunagiri</title>", '<meta name="claude:viewport-fit-sides" content="cover">',
                       desc, links, style, body, ""])
     target.write_text(frag, encoding="utf-8")
