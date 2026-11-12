@@ -11,6 +11,8 @@ Live at https://arunkumara.com, served by GitHub Pages from the `main` branch.
 | --- | --- |
 | `index.html` | The built page. Generated, do not edit by hand. |
 | `img/` | Portrait, episode title cards, the 192px icon, and the static fallback for the diagram. |
+| `series/` | The written episode pages. Generated, do not edit by hand. See Articles below. |
+| `src/series/` | The article template, the player for the video graphics, and one folder per written episode. |
 | `robots.txt`, `sitemap.xml` | Tell search engines the site may be read and where its one page is. |
 | `googleeadd50194bc2fe6b.html` | Proves to Google Search Console that Arun owns the site. Keep it, or the site loses its verified status. |
 | `src/og.html` | Source of `img/og.jpg`, the picture shown when the link is shared. See Search and sharing below. |
@@ -69,6 +71,29 @@ and convert the result to JPEG:
       --user-data-dir=/tmp/og-profile --screenshot=/tmp/og.png "file://$PWD/src/og.html"
     python3 -c "from PIL import Image; Image.open('/tmp/og.png').convert('RGB').save('img/og.jpg', quality=88, optimize=True, progressive=True)"
 
+## Articles
+
+An episode can have a written page at `series/<slug>/`, with the video's own graphics playing beside the text.
+The home page card for that episode then links to the page instead of to YouTube.
+
+To add one:
+
+1. Give the video a `"slug"` in `src/videos.json`: lower-case words joined by hyphens.
+2. Create `src/series/<slug>/article.html`. It starts with `<p class="dek">`, one sentence that is also the
+   search description, followed by the text. The page title is the video title, or `"article_title"` if set.
+3. Create `src/series/<slug>/scenes.js` from the video's overlay source: everything in its script up to
+   `const DEFS`. It must define `BOX` and `FULL`, the lists of `[start, end, scene]` the video used.
+4. Place the graphics with `<figure class="scene" data-scene="box:3"><figcaption>...</figcaption></figure>`.
+   `box:3` is the fourth entry of `BOX`, `full:0` the first of `FULL`. A full-screen scene needs `class="scene
+   tall"` and a `data-view="x y width height"` crop of the 1080 by 1920 frame.
+5. Add the page's address to `sitemap.xml`. The build stops if it is missing.
+6. Run `python3 src/build.py`.
+
+`src/series/template.html` is the page around the text. It takes its colours, navigation, buttons, footer and
+Google tag from `src/page.html`, so those change in one place. `src/series/player.js` runs the scenes: each one
+plays while it is on screen, holds on the finished picture and starts again, and has a pause button. Visitors
+who ask their device for less motion see the finished picture and can play it once.
+
 ## Analytics
 
 The Google tag near the top of the head of `src/page.html` sends visits to Google Analytics. Its ID,
@@ -86,8 +111,8 @@ scrolls.
 
 - `src/videos.json` is the list of every video seen so far, with its episode number.
 - `src/update_videos.py` reads the channel feed and adds new videos to the list, with a thumbnail under `img/`.
-- `.github/workflows/update-videos.yml` runs that script every hour, rebuilds `index.html`, and commits
-  to `main` when something changed. The commit publishes the site. It can also be run by hand from the
+- `.github/workflows/update-videos.yml` runs that script every hour, rebuilds `index.html` and `series/`,
+  and commits to `main` when something changed. The commit publishes the site. It can also be run by hand from the
   Actions tab.
 
 A new card takes its title from YouTube and its blurb from the first sentences of the video description.
